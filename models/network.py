@@ -19,6 +19,27 @@ class MLP(nn.Module):
 
         self.mlp = nn.Sequential(*layers)
 
-    def forward(self, x):
+    def forward(self, x, lengths):
         #x = rnn.pack_padded_sequence(x)
         return self.mlp(x)
+
+class RNN(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+        super(RNN, self).__init__()
+        self.embedding_size = input_size
+        self.bilstm = nn.LSTM(self.embedding_size, hidden_size, num_layers=3, dropout=0.1, bidirectional=True)
+        self.linear1 = nn.Linear(hidden_size * 2, output_size*2)
+        self.linear2 = nn.Linear(output_size*2, output_size)
+        self.dropout = nn.Dropout(p=0.1)
+
+    def forward(self, x, lengths):
+        packed_x = rnn.pack_padded_sequence(x, lengths, enforce_sorted=False, batch_first=True)
+        packed_out = self.bilstm(packed_x)[0]
+        out, out_lens = rnn.pad_packed_sequence(packed_out, batch_first=True)
+
+        out = self.linear1(out)
+        out = self.dropout(out)
+
+        out = self.linear2(out)
+
+        return out

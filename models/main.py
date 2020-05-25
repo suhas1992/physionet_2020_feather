@@ -19,13 +19,13 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
         Returns:
             (Model, Optimizer) : Returns the model and optimizer after one training cycle
         """
-    for batch_num, (features, labels) in enumerate(Trainloader):
+    for batch_num, (features, labels, lengths) in enumerate(Trainloader):
         # Send data to device
         features, labels = features.to(cfg.DEVICE), labels.to(cfg.DEVICE)
 
         Optimizer.zero_grad()
 
-        pred = Model(features)
+        pred = Model(features, lengths)
 
         # Compute loss and update optimizer
         loss = Criterion(pred, labels)

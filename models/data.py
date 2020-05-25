@@ -4,7 +4,7 @@ import config as cfg
 
 import torch
 import torch.nn.utils.rnn as rnn
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split, sampler 
 
 class ECGTrainSet(Dataset):
     def __init__(self, feature_dict):
@@ -26,9 +26,19 @@ def train_collate(batch):
     features, labels = zip(*batch)
 
     features = rnn.pad_sequence(features, batch_first=True)
+    lens = [len(seq) for seq in features]
     labels = torch.cat(list(labels))
 
-    return features, labels
+    return features, labels, lens
+
+def train_val_test_split(dataset):
+    train_size = int(0.75 * len(dataset))
+    val_size = int(0.15 * len(dataset))
+    test_size = int(0.1 * len(dataset))
+
+    trainset, valset, testset = random_split(dataset, [train_size, val_size, test_size])
+
+    return trainset, valset, testset
 
 # Dictionary to define Dataset stats
 config_dict = {'train':{'dataset':ECGTrainSet, 'collate':train_collate, 'shuffle':True}}
