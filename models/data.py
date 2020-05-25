@@ -25,7 +25,7 @@ class ECGTrainSet(Dataset):
 def train_collate(batch):
     features, labels = zip(*batch)
 
-    features = torch.transpose(rnn.pad_sequence(features), 1, 0)
+    features = rnn.pad_sequence(features, batch_first=True)
     labels = torch.cat(list(labels))
 
     return features, labels

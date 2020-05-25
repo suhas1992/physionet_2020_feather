@@ -40,5 +40,6 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
         torch.cuda.empty_cache()
         del features
         del labels
+        del loss
 
     return Model, Optimizer
