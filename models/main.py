@@ -3,6 +3,7 @@ import config as cfg
 
 import torch
 import torch.nn as nn
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, multilabel_confusion_matrix
 
 def train(Model, Trainloader, Optimizer, Criterion, Epoch):
     """ Defines a training structure that considers the model, optimizer 

@@ -10,6 +10,7 @@ import torch.nn as nn
 if __name__ == "__main__":
     # Define model parameters
     train_loader = get_loader("train")
+    val_loader = get_loader("val")
 
     input_dim = 12
     hidden_list = [24, 16, 16, 12, 9]
@@ -18,7 +19,8 @@ if __name__ == "__main__":
     #model = MLP(input_dim, hidden_list, output_dim)
     model = RNN(input_dim, input_dim, output_dim)
     model.to(cfg.DEVICE)
-    criterion = nn.CrossEntropyLoss()
+    criterion = nn.BCELoss()
+    criterion.to(cfg.DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=2, threshold=0.01)
 
