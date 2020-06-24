@@ -44,8 +44,8 @@ def train_collate(batch):
     return features, labels, lens
 
 # Dictionary to define Dataset stats
-config_dict = {'train':{'collate':train_collate, 'shuffle':True},
-               'val':{'collate':train_collate, 'shuffle':False}}
+config_dict = {'train':{'collate':train_collate, 'shuffle':True, 'batch_size':cfg.BATCH_SIZE},
+               'val':{'collate':train_collate, 'shuffle':False, 'batch_size':1}}
 
 def load_pickle(path):
     """ Load data stored in pickle format
@@ -87,18 +87,18 @@ def get_loader(loader_type):
                                        test_size=cfg.VAL_SPLIT+cfg.TEST_SPLIT,
                                        shuffle=True, random_state=cfg.RANDOM_SEED)
         temp_set = Subset(dataset, temp_idx)
-        val_idx, test_idx = train_test_split(list(range(len(dataset))),
+        val_idx, test_idx = train_test_split(list(range(len(temp_set))),
                                              test_size= 1-(cfg.TEST_SPLIT/(cfg.VAL_SPLIT + cfg.TEST_SPLIT)),
                                              shuffle=True, random_state=cfg.RANDOM_SEED)
         if loader_type == "val":
-            loader_set = (temp_set, val_idx)
+            loader_set = Subset(temp_set, val_idx)
         else:
-            loader_set = (temp_set, test_idx) 
+            loader_set = Subset(temp_set, test_idx) 
 
     loader = DataLoader(loader_set, 
                         num_workers=cfg.NUM_WORKERS, 
                         pin_memory=cfg.PIN_MEMORY, 
-                        batch_size=cfg.BATCH_SIZE,
+                        batch_size=config_dict[loader_type]['batch_size'],
                         shuffle=config_dict[loader_type]['shuffle'],
                         collate_fn=config_dict[loader_type]['collate'])
 
