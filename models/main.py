@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from utils import eval_metrics as em
+import utils.eval_metrics as em
 import config as cfg 
 
 import torch
@@ -83,10 +83,8 @@ def eval(Model, Evalloader, Criterion, Epoch):
         pred = pred.detach().numpy()
         labels = labels.cpu().detach().numpy()
 
-        preds.extend(pred.tolist())
-        true_labels.extend(labels.tolist())
-
-        accuracy += accuracy_score(pred, labels)
+        preds.append(pred.tolist())
+        true_labels.append(labels.tolist())
         
         if batch_num % 50 == 1:
             curr_loss = float(loss.item())
@@ -99,13 +97,15 @@ def eval(Model, Evalloader, Criterion, Epoch):
         del loss
 
     # Compute final metrics
-    accuracy /= batch_num
-    true_labels = np.asarray(true_labels)
-    preds = np.asarray(preds)
-    
-    em.print_conf_mat(true_labels, preds)
-    em.print_multilabel_conf_mat(true_labels, preds)
-    print("Accuracy", accuracy)
+    true_labels = np.vstack(true_labels)
+    preds = np.vstack(preds)
+    print(true_labels.shape, preds.shape)
+    accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds)
+
+    print("Total Accuracy: ", accuracy, 
+          "Total Misclassification Rate: ", misclass_rate,
+          "Total Recall: ", recall, 
+          "Total Precision: ", precision)
     
     exit()
     return accuracy
