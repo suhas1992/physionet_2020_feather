@@ -1,6 +1,7 @@
 import config as cfg 
 import numpy as np 
 import pandas as pd 
+import warnings
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, multilabel_confusion_matrix
 
 def print_conf_mat(true_labels, preds):
@@ -12,6 +13,7 @@ def print_conf_mat(true_labels, preds):
     print("Confusion Matrix \n", cm_df)
 
 def print_multilabel_report(true_labels, preds):
+    warnings.filterwarnings("ignore")
     I = pd.Index(['True Negative', 'True Positive'], name="rows")
     C = pd.Index(['Predicted Negative', 'Predicted Positive'], name="columns")
     ml_cm = multilabel_confusion_matrix(true_labels, preds)
@@ -46,5 +48,6 @@ def print_multilabel_report(true_labels, preds):
         tot_prec += precision
         tot_rec += recall 
         tot_misclass += misclass_rate
-
+        
+    i += 1
     return tot_acc/i, tot_prec/i, tot_rec/i, tot_misclass/i

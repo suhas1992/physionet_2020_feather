@@ -29,8 +29,7 @@ class RNN(nn.Module):
         self.embedding_size = input_size
         self.bilstm = nn.LSTM(self.embedding_size, 
                               hidden_size, 
-                              num_layers=2, 
-                              dropout=0.1, 
+                              num_layers=1, 
                               bidirectional=True,
                               batch_first=True)
         self.linear1 = nn.Linear(hidden_size * 2, output_size*2)

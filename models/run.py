@@ -9,7 +9,7 @@ import torch.nn as nn
 
 if __name__ == "__main__":
     # Define model parameters
-    #train_loader = get_loader("train")
+    train_loader = get_loader("train")
     val_loader = get_loader("val")
 
     input_dim = 12
@@ -27,8 +27,8 @@ if __name__ == "__main__":
     for i in range(cfg.EPOCH):
         print("Epoch number: ", i)
         # Train the model
-        #model.train()
-        #model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
+        model.train()
+        model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
 
         # Evaluate the model
         model.eval()

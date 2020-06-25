@@ -46,8 +46,6 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
         del labels
         del loss
 
-        break
-
     return Model, Optimizer
 
 def eval(Model, Evalloader, Criterion, Epoch):
@@ -88,7 +86,7 @@ def eval(Model, Evalloader, Criterion, Epoch):
         
         if batch_num % 50 == 1:
             curr_loss = float(loss.item())
-            print("Epoch: ", Epoch, "Validation Loss: ", curr_loss, "Accuracy: ", accuracy/batch_num)
+            print("Epoch: ", Epoch, "Validation Loss: ", curr_loss)
 
         # Clear redundant variables
         torch.cuda.empty_cache()
@@ -99,7 +97,7 @@ def eval(Model, Evalloader, Criterion, Epoch):
     # Compute final metrics
     true_labels = np.vstack(true_labels)
     preds = np.vstack(preds)
-    print(true_labels.shape, preds.shape)
+
     accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds)
 
     print("Total Accuracy: ", accuracy, 
@@ -107,5 +105,4 @@ def eval(Model, Evalloader, Criterion, Epoch):
           "Total Recall: ", recall, 
           "Total Precision: ", precision)
     
-    exit()
     return accuracy
