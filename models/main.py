@@ -64,6 +64,7 @@ def eval(Model, Evalloader, Criterion, Epoch):
             (Accuracy) : Returns the accuracy
         """
     accuracy = 0
+    tot_loss = 0
     true_labels = []
     preds = []
     for batch_num, (features, labels, lengths) in enumerate(Evalloader):
@@ -83,6 +84,8 @@ def eval(Model, Evalloader, Criterion, Epoch):
 
         preds.append(pred.tolist())
         true_labels.append(labels.tolist())
+
+        tot_loss += float(loss.item())
         
         if batch_num % 50 == 1:
             curr_loss = float(loss.item())
@@ -100,9 +103,9 @@ def eval(Model, Evalloader, Criterion, Epoch):
 
     accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds)
 
-    print("Total Accuracy: ", accuracy, 
+    print("\n\n\nTotal Accuracy: ", accuracy, 
           "Total Misclassification Rate: ", misclass_rate,
           "Total Recall: ", recall, 
           "Total Precision: ", precision)
     
-    return accuracy
+    return accuracy, tot_loss/(batch_num+1)

@@ -1,7 +1,7 @@
 import os
 import main as mn 
 import config as cfg 
-from network import MLP, RNN
+from networks.rnn import RNN 
 from data import get_loader
 
 import torch
@@ -22,14 +22,17 @@ if __name__ == "__main__":
     criterion = nn.BCELoss()
     criterion.to(cfg.DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=2, threshold=0.01)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=1, threshold=0.01)
 
     for i in range(cfg.EPOCH):
-        print("Epoch number: ", i)
+        print("\nEpoch number: ", i)
         # Train the model
         model.train()
         model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
 
         # Evaluate the model
         model.eval()
-        accuracy = mn.eval(model, val_loader, criterion, i)
+        accuracy, loss = mn.eval(model, val_loader, criterion, i)
+        
+        # Step through the scheduler
+        scheduler.step(loss)

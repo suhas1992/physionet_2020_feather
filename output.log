@@ -1,18 +1,25 @@
+
 Epoch number:  0
-Epoch:  0 Training Loss:  0.6851646900177002
-Epoch:  0 Training Loss:  0.3648131191730499
-Epoch:  0 Training Loss:  0.3516228199005127
-Epoch:  0 Training Loss:  0.3902515172958374
-Epoch:  0 Training Loss:  0.36882561445236206
-Epoch:  0 Training Loss:  0.33539146184921265
-Epoch:  0 Training Loss:  0.33529728651046753
-Epoch:  0 Validation Loss:  0.4124572277069092
-Epoch:  0 Validation Loss:  0.5114375352859497
-Epoch:  0 Validation Loss:  0.4490586817264557
-Epoch:  0 Validation Loss:  0.3055908977985382
-Epoch:  0 Validation Loss:  0.31181228160858154
-Epoch:  0 Validation Loss:  0.25523701310157776
-Epoch:  0 Validation Loss:  0.28673288226127625
+Epoch:  0 Training Loss:  0.6896045804023743
+Epoch:  0 Training Loss:  0.3970555067062378
+Epoch:  0 Training Loss:  0.3448052406311035
+Epoch:  0 Training Loss:  0.38492149114608765
+Epoch:  0 Training Loss:  0.34155523777008057
+Epoch:  0 Training Loss:  0.3254752457141876
+Epoch:  0 Training Loss:  0.3690161406993866
+Epoch:  0 Training Loss:  0.41409632563591003
+Epoch:  0 Training Loss:  0.3455032706260681
+Epoch:  0 Training Loss:  0.349161297082901
+Epoch:  0 Training Loss:  0.31581708788871765
+Epoch:  0 Training Loss:  0.402880996465683
+Epoch:  0 Training Loss:  0.29946252703666687
+Epoch:  0 Validation Loss:  0.33439531922340393
+Epoch:  0 Validation Loss:  0.5093473196029663
+Epoch:  0 Validation Loss:  0.4283636808395386
+Epoch:  0 Validation Loss:  0.32810696959495544
+Epoch:  0 Validation Loss:  0.33432820439338684
+Epoch:  0 Validation Loss:  0.22912025451660156
+Epoch:  0 Validation Loss:  0.22942858934402466
 Confusion Matrix: AF
 columns        Predicted Negative  Predicted Positive
 rows                                                 
@@ -34,9 +41,9 @@ Accuracy:  0.9766763848396501 Misclassification Rate:  0.023323615160349864 Reca
 Confusion Matrix: Normal
 columns        Predicted Negative  Predicted Positive
 rows                                                 
-True Negative                 249                   1
-True Positive                  91                   2
-Accuracy:  0.7317784256559767 Misclassification Rate:  0.2682215743440233 Recall:  0.021505376344086023 Precision:  0.6666666666666666
+True Negative                 250                   0
+True Positive                  93                   0
+Accuracy:  0.7288629737609329 Misclassification Rate:  0.2711370262390671 Recall:  0.0 Precision:  nan
 Confusion Matrix: PAC
 columns        Predicted Negative  Predicted Positive
 rows                                                 
@@ -67,22 +74,32 @@ rows
 True Negative                 330                   0
 True Positive                  13                   0
 Accuracy:  0.9620991253644315 Misclassification Rate:  0.03790087463556846 Recall:  0.0 Precision:  nan
-Total Accuracy:  0.8807904114026565 Total Misclassification Rate:  0.11920958859734368 Total Recall:  0.0023894862604540027 Total Precision:  nan
+
+
+
+Total Accuracy:  0.8804664723032071 Total Misclassification Rate:  0.11953352769679298 Total Recall:  0.0 Total Precision:  nan
+
 Epoch number:  1
-Epoch:  1 Training Loss:  0.31480443477630615
-Epoch:  1 Training Loss:  0.34709852933883667
-Epoch:  1 Training Loss:  0.3319897949695587
-Epoch:  1 Training Loss:  0.3473045527935028
-Epoch:  1 Training Loss:  0.31863468885421753
-Epoch:  1 Training Loss:  0.3539169132709503
-Epoch:  1 Training Loss:  0.33701905608177185
-Epoch:  1 Validation Loss:  0.3781934678554535
-Epoch:  1 Validation Loss:  0.5227608680725098
-Epoch:  1 Validation Loss:  0.34173479676246643
-Epoch:  1 Validation Loss:  0.3730287253856659
-Epoch:  1 Validation Loss:  0.4040597677230835
-Epoch:  1 Validation Loss:  0.2601909935474396
-Epoch:  1 Validation Loss:  0.27504298090934753
+Epoch:  1 Training Loss:  0.37522098422050476
+Epoch:  1 Training Loss:  0.34149169921875
+Epoch:  1 Training Loss:  0.3523350954055786
+Epoch:  1 Training Loss:  0.3596495985984802
+Epoch:  1 Training Loss:  0.33150413632392883
+Epoch:  1 Training Loss:  0.3579340875148773
+Epoch:  1 Training Loss:  0.3383045792579651
+Epoch:  1 Training Loss:  0.3246002197265625
+Epoch:  1 Training Loss:  0.3143913447856903
+Epoch:  1 Training Loss:  0.3716360330581665
+Epoch:  1 Training Loss:  0.3688904047012329
+Epoch:  1 Training Loss:  0.32887279987335205
+Epoch:  1 Training Loss:  0.30389150977134705
+Epoch:  1 Validation Loss:  0.37179240584373474
+Epoch:  1 Validation Loss:  0.5186232924461365
+Epoch:  1 Validation Loss:  0.3922535479068756
+Epoch:  1 Validation Loss:  0.35050272941589355
+Epoch:  1 Validation Loss:  0.3736764192581177
+Epoch:  1 Validation Loss:  0.21729527413845062
+Epoch:  1 Validation Loss:  0.22056788206100464
 Confusion Matrix: AF
 columns        Predicted Negative  Predicted Positive
 rows                                                 
@@ -104,9 +121,9 @@ Accuracy:  0.9766763848396501 Misclassification Rate:  0.023323615160349864 Reca
 Confusion Matrix: Normal
 columns        Predicted Negative  Predicted Positive
 rows                                                 
-True Negative                 244                   6
-True Positive                  85                   8
-Accuracy:  0.7346938775510204 Misclassification Rate:  0.26530612244897955 Recall:  0.08602150537634409 Precision:  0.5714285714285714
+True Negative                 250                   0
+True Positive                  93                   0
+Accuracy:  0.7288629737609329 Misclassification Rate:  0.2711370262390671 Recall:  0.0 Precision:  nan
 Confusion Matrix: PAC
 columns        Predicted Negative  Predicted Positive
 rows                                                 
@@ -137,292 +154,9 @@ rows
 True Negative                 330                   0
 True Positive                  13                   0
 Accuracy:  0.9620991253644315 Misclassification Rate:  0.03790087463556846 Recall:  0.0 Precision:  nan
-Total Accuracy:  0.8811143505021055 Total Misclassification Rate:  0.11888564949789439 Total Recall:  0.00955794504181601 Total Precision:  nan
+
+
+
+Total Accuracy:  0.8804664723032071 Total Misclassification Rate:  0.11953352769679298 Total Recall:  0.0 Total Precision:  nan
+
 Epoch number:  2
-Epoch:  2 Training Loss:  0.33160164952278137
-Epoch:  2 Training Loss:  0.3329693675041199
-Epoch:  2 Training Loss:  0.3661814332008362
-Epoch:  2 Training Loss:  0.3494097888469696
-Epoch:  2 Training Loss:  0.3264947235584259
-Epoch:  2 Training Loss:  0.3438602685928345
-Epoch:  2 Training Loss:  0.34037020802497864
-Epoch:  2 Validation Loss:  0.36181434988975525
-Epoch:  2 Validation Loss:  0.5097352862358093
-Epoch:  2 Validation Loss:  0.35827159881591797
-Epoch:  2 Validation Loss:  0.35431158542633057
-Epoch:  2 Validation Loss:  0.3759539723396301
-Epoch:  2 Validation Loss:  0.3578002452850342
-Epoch:  2 Validation Loss:  0.3024323284626007
-Confusion Matrix: AF
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 295                   0
-True Positive                  48                   0
-Accuracy:  0.8600583090379009 Misclassification Rate:  0.13994169096209907 Recall:  0.0 Precision:  nan
-Confusion Matrix: I-AVB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 285                   0
-True Positive                  58                   0
-Accuracy:  0.8309037900874635 Misclassification Rate:  0.1690962099125365 Recall:  0.0 Precision:  nan
-Confusion Matrix: LBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 335                   0
-True Positive                   8                   0
-Accuracy:  0.9766763848396501 Misclassification Rate:  0.023323615160349864 Recall:  0.0 Precision:  nan
-Confusion Matrix: Normal
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 248                   2
-True Positive                  89                   4
-Accuracy:  0.7346938775510204 Misclassification Rate:  0.26530612244897955 Recall:  0.043010752688172046 Precision:  0.6666666666666666
-Confusion Matrix: PAC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 302                   0
-True Positive                  41                   0
-Accuracy:  0.880466472303207 Misclassification Rate:  0.11953352769679304 Recall:  0.0 Precision:  nan
-Confusion Matrix: PVC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 301                   0
-True Positive                  42                   0
-Accuracy:  0.8775510204081632 Misclassification Rate:  0.12244897959183676 Recall:  0.0 Precision:  nan
-Confusion Matrix: RBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 307                   0
-True Positive                  36                   0
-Accuracy:  0.8950437317784257 Misclassification Rate:  0.10495626822157433 Recall:  0.0 Precision:  nan
-Confusion Matrix: STD
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 313                   0
-True Positive                  30                   0
-Accuracy:  0.9125364431486881 Misclassification Rate:  0.08746355685131191 Recall:  0.0 Precision:  nan
-Confusion Matrix: STE
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 330                   0
-True Positive                  13                   0
-Accuracy:  0.9620991253644315 Misclassification Rate:  0.03790087463556846 Recall:  0.0 Precision:  nan
-Total Accuracy:  0.8811143505021055 Total Misclassification Rate:  0.11888564949789439 Total Recall:  0.004778972520908005 Total Precision:  nan
-Epoch number:  3
-Epoch:  3 Training Loss:  0.3281646966934204
-Epoch:  3 Training Loss:  0.32601678371429443
-Epoch:  3 Training Loss:  0.30762580037117004
-Epoch:  3 Training Loss:  0.3327769935131073
-Epoch:  3 Training Loss:  0.35667502880096436
-Epoch:  3 Training Loss:  0.31663963198661804
-Epoch:  3 Training Loss:  0.3415142595767975
-Epoch:  3 Validation Loss:  0.32472848892211914
-Epoch:  3 Validation Loss:  0.4549446105957031
-Epoch:  3 Validation Loss:  0.3626502752304077
-Epoch:  3 Validation Loss:  0.3307170569896698
-Epoch:  3 Validation Loss:  0.35540151596069336
-Epoch:  3 Validation Loss:  0.28242191672325134
-Epoch:  3 Validation Loss:  0.28893110156059265
-Confusion Matrix: AF
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 295                   0
-True Positive                  48                   0
-Accuracy:  0.8600583090379009 Misclassification Rate:  0.13994169096209907 Recall:  0.0 Precision:  nan
-Confusion Matrix: I-AVB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 285                   0
-True Positive                  58                   0
-Accuracy:  0.8309037900874635 Misclassification Rate:  0.1690962099125365 Recall:  0.0 Precision:  nan
-Confusion Matrix: LBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 334                   1
-True Positive                   8                   0
-Accuracy:  0.9737609329446064 Misclassification Rate:  0.026239067055393583 Recall:  0.0 Precision:  0.0
-Confusion Matrix: Normal
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 247                   3
-True Positive                  90                   3
-Accuracy:  0.7288629737609329 Misclassification Rate:  0.2711370262390671 Recall:  0.03225806451612903 Precision:  0.5
-Confusion Matrix: PAC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 301                   1
-True Positive                  41                   0
-Accuracy:  0.8775510204081632 Misclassification Rate:  0.12244897959183676 Recall:  0.0 Precision:  0.0
-Confusion Matrix: PVC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 300                   1
-True Positive                  42                   0
-Accuracy:  0.8746355685131195 Misclassification Rate:  0.12536443148688048 Recall:  0.0 Precision:  0.0
-Confusion Matrix: RBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 307                   0
-True Positive                  36                   0
-Accuracy:  0.8950437317784257 Misclassification Rate:  0.10495626822157433 Recall:  0.0 Precision:  nan
-Confusion Matrix: STD
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 313                   0
-True Positive                  30                   0
-Accuracy:  0.9125364431486881 Misclassification Rate:  0.08746355685131191 Recall:  0.0 Precision:  nan
-Confusion Matrix: STE
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 330                   0
-True Positive                  13                   0
-Accuracy:  0.9620991253644315 Misclassification Rate:  0.03790087463556846 Recall:  0.0 Precision:  nan
-Total Accuracy:  0.8794946550048591 Total Misclassification Rate:  0.12050534499514091 Total Recall:  0.0035842293906810036 Total Precision:  nan
-Epoch number:  4
-Epoch:  4 Training Loss:  0.3027799427509308
-Epoch:  4 Training Loss:  0.35512590408325195
-Epoch:  4 Training Loss:  0.3362804651260376
-Epoch:  4 Training Loss:  0.36736562848091125
-Epoch:  4 Training Loss:  0.3179670572280884
-Epoch:  4 Training Loss:  0.35207313299179077
-Epoch:  4 Training Loss:  0.3716423511505127
-Epoch:  4 Validation Loss:  0.35107019543647766
-Epoch:  4 Validation Loss:  0.4820314645767212
-Epoch:  4 Validation Loss:  0.4097966253757477
-Epoch:  4 Validation Loss:  0.3260938823223114
-Epoch:  4 Validation Loss:  0.3351935148239136
-Epoch:  4 Validation Loss:  0.3447722792625427
-Epoch:  4 Validation Loss:  0.3216237723827362
-Confusion Matrix: AF
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 295                   0
-True Positive                  48                   0
-Accuracy:  0.8600583090379009 Misclassification Rate:  0.13994169096209907 Recall:  0.0 Precision:  nan
-Confusion Matrix: I-AVB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 285                   0
-True Positive                  58                   0
-Accuracy:  0.8309037900874635 Misclassification Rate:  0.1690962099125365 Recall:  0.0 Precision:  nan
-Confusion Matrix: LBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 335                   0
-True Positive                   8                   0
-Accuracy:  0.9766763848396501 Misclassification Rate:  0.023323615160349864 Recall:  0.0 Precision:  nan
-Confusion Matrix: Normal
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 248                   2
-True Positive                  88                   5
-Accuracy:  0.7376093294460642 Misclassification Rate:  0.26239067055393583 Recall:  0.053763440860215055 Precision:  0.7142857142857143
-Confusion Matrix: PAC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 302                   0
-True Positive                  41                   0
-Accuracy:  0.880466472303207 Misclassification Rate:  0.11953352769679304 Recall:  0.0 Precision:  nan
-Confusion Matrix: PVC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 301                   0
-True Positive                  42                   0
-Accuracy:  0.8775510204081632 Misclassification Rate:  0.12244897959183676 Recall:  0.0 Precision:  nan
-Confusion Matrix: RBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 307                   0
-True Positive                  36                   0
-Accuracy:  0.8950437317784257 Misclassification Rate:  0.10495626822157433 Recall:  0.0 Precision:  nan
-Confusion Matrix: STD
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 313                   0
-True Positive                  30                   0
-Accuracy:  0.9125364431486881 Misclassification Rate:  0.08746355685131191 Recall:  0.0 Precision:  nan
-Confusion Matrix: STE
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 330                   0
-True Positive                  13                   0
-Accuracy:  0.9620991253644315 Misclassification Rate:  0.03790087463556846 Recall:  0.0 Precision:  nan
-Total Accuracy:  0.8814382896015549 Total Misclassification Rate:  0.1185617103984451 Total Recall:  0.005973715651135006 Total Precision:  nan
-Epoch number:  5
-Epoch:  5 Training Loss:  0.32500678300857544
-Epoch:  5 Training Loss:  0.3225502073764801
-Epoch:  5 Training Loss:  0.3376936912536621
-Epoch:  5 Training Loss:  0.347505122423172
-Epoch:  5 Training Loss:  0.3848499357700348
-Epoch:  5 Training Loss:  0.33503684401512146
-Epoch:  5 Training Loss:  0.31315183639526367
-Epoch:  5 Validation Loss:  0.3326667845249176
-Epoch:  5 Validation Loss:  0.44213220477104187
-Epoch:  5 Validation Loss:  0.3860251307487488
-Epoch:  5 Validation Loss:  0.3267885148525238
-Epoch:  5 Validation Loss:  0.3280656039714813
-Epoch:  5 Validation Loss:  0.36545324325561523
-Epoch:  5 Validation Loss:  0.335340291261673
-Confusion Matrix: AF
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 295                   0
-True Positive                  48                   0
-Accuracy:  0.8600583090379009 Misclassification Rate:  0.13994169096209907 Recall:  0.0 Precision:  nan
-Confusion Matrix: I-AVB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 285                   0
-True Positive                  58                   0
-Accuracy:  0.8309037900874635 Misclassification Rate:  0.1690962099125365 Recall:  0.0 Precision:  nan
-Confusion Matrix: LBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 335                   0
-True Positive                   8                   0
-Accuracy:  0.9766763848396501 Misclassification Rate:  0.023323615160349864 Recall:  0.0 Precision:  nan
-Confusion Matrix: Normal
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 248                   2
-True Positive                  88                   5
-Accuracy:  0.7376093294460642 Misclassification Rate:  0.26239067055393583 Recall:  0.053763440860215055 Precision:  0.7142857142857143
-Confusion Matrix: PAC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 302                   0
-True Positive                  41                   0
-Accuracy:  0.880466472303207 Misclassification Rate:  0.11953352769679304 Recall:  0.0 Precision:  nan
-Confusion Matrix: PVC
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 301                   0
-True Positive                  42                   0
-Accuracy:  0.8775510204081632 Misclassification Rate:  0.12244897959183676 Recall:  0.0 Precision:  nan
-Confusion Matrix: RBBB
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 307                   0
-True Positive                  36                   0
-Accuracy:  0.8950437317784257 Misclassification Rate:  0.10495626822157433 Recall:  0.0 Precision:  nan
-Confusion Matrix: STD
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 313                   0
-True Positive                  30                   0
-Accuracy:  0.9125364431486881 Misclassification Rate:  0.08746355685131191 Recall:  0.0 Precision:  nan
-Confusion Matrix: STE
-columns        Predicted Negative  Predicted Positive
-rows                                                 
-True Negative                 329                   1
-True Positive                  13                   0
-Accuracy:  0.9591836734693877 Misclassification Rate:  0.04081632653061229 Recall:  0.0 Precision:  0.0
-Total Accuracy:  0.8811143505021055 Total Misclassification Rate:  0.11888564949789442 Total Recall:  0.005973715651135006 Total Precision:  nan
-Epoch number:  6
-Epoch:  6 Training Loss:  0.34207335114479065
-Epoch:  6 Training Loss:  0.34203803539276123
-Epoch:  6 Training Loss:  0.3408328592777252
-Epoch:  6 Training Loss:  0.3625355064868927
-Epoch:  6 Training Loss:  0.32050803303718567
-Epoch:  6 Training Loss:  0.3313368558883667
-Epoch:  6 Training Loss:  0.3286121189594269
