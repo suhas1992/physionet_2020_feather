@@ -38,6 +38,8 @@ def train_collate(batch):
     features, labels = zip(*batch)
 
     features = rnn.pad_sequence(features, batch_first=True)
+    if cfg.CNN:
+        features = torch.transpose(features, 1, 2)
     lens = [len(seq) for seq in features]
     labels = torch.cat(list(labels))
 

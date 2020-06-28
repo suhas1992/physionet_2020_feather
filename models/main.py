@@ -29,14 +29,14 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
 
         Optimizer.zero_grad()
 
-        pred = Model(features, lengths)
+        _, pred = Model(features)
 
         # Compute loss and update optimizer
         loss = Criterion(pred, labels)
         loss.backward()
         Optimizer.step()
 
-        if batch_num % 25 == 1:
+        if batch_num % 400 == 1:
             curr_loss = float(loss.item())
             print("Epoch: ", Epoch, "Training Loss: ", curr_loss)
 
@@ -71,7 +71,7 @@ def eval(Model, Evalloader, Criterion, Epoch):
         # Send data to device
         features, labels = features.to(cfg.DEVICE), labels.to(cfg.DEVICE)
 
-        pred = Model(features, lengths)
+        _, pred = Model(features)
 
         # Compute loss 
         loss = Criterion(pred, labels)

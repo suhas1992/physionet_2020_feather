@@ -2,13 +2,14 @@ import torch
 
 # DEFINE PROGRAM CONSTANTS HERE
 EPOCH = 50
-BATCH_SIZE = 16
+BATCH_SIZE = 2
 RANDOM_SEED = 42
 NUM_WORKERS = 6
 PIN_MEMORY = True
 TRAIN_SPLIT = 0.75
 VAL_SPLIT = 0.2
 TEST_SPLIT = 0.05
+CNN = True
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 DATA_PATH = "/home/vsanil/workhorse3/physionet/Training_WFDB/"
 DATA_DICT_PATH = "/home/vsanil/workhorse3/physionet/data.p"
