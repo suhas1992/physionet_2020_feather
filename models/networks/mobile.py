@@ -25,6 +25,7 @@ def _make_divisible(v, divisor, min_value=None):
 # Define a Batchnormalized ReLU-activated Convolutional Layer
 class convBNRelu(nn.Sequential):
     def __init__(self, in_planes, out_planes, kernel_size=3, stride=1, groups=1):
+        kernel_size = 33
         pads = (kernel_size - 1) // 2
         super(convBNRelu, self).__init__(
             nn.Conv1d(in_planes, out_planes, kernel_size, stride=stride, padding=pads,groups=groups, bias=False),
@@ -127,4 +128,4 @@ class mobileNet(nn.Module):
         closs_output = self.sig_closs(closs_output)
 
         # Put result through a classifier
-        return closs_output, self.sig_closs(self.finalClassifier(x))
+        return self.sig_closs(self.finalClassifier(x))

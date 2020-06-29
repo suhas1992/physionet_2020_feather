@@ -29,7 +29,7 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
 
         Optimizer.zero_grad()
 
-        _, pred = Model(features)
+        pred = Model(features)
 
         # Compute loss and update optimizer
         loss = Criterion(pred, labels)
@@ -71,7 +71,7 @@ def eval(Model, Evalloader, Criterion, Epoch):
         # Send data to device
         features, labels = features.to(cfg.DEVICE), labels.to(cfg.DEVICE)
 
-        _, pred = Model(features)
+        pred = Model(features)
 
         # Compute loss 
         loss = Criterion(pred, labels)
