@@ -10,6 +10,11 @@ from data import get_loader
 import torch
 import torch.nn as nn
 
+def save(model,optimizer,path):
+    torch.save({'model_state_dict':model.state_dict(),
+                'optimizer_state_dict':optimizer.state_dict()
+               },os.path.join(path,"best_model.pth"))
+
 if __name__ == "__main__":
     # Define model parameters
     train_loader = get_loader("train")
@@ -46,10 +51,12 @@ if __name__ == "__main__":
     summary(model, (12, 10000))
 
     # Define training parameters
+    path = "/share/workhorse3/vsanil/physionet/best_models/"
     criterion = nn.BCELoss()
     criterion.to(cfg.DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, threshold=0.01)
+    best_recall = 0.0
 
     for i in range(cfg.EPOCH):
         print("\nEpoch number: ", i)
@@ -59,7 +66,11 @@ if __name__ == "__main__":
 
         # Evaluate the model
         model.eval()
-        accuracy, loss = mn.eval(model, val_loader, criterion, i)
+        accuracy, loss, recall = mn.eval(model, val_loader, criterion, i)
         
+        if recall > best_recall:
+            save(model, optimizer, path)
+            best_recall = recall
+
         # Step through the scheduler
         scheduler.step(loss)
