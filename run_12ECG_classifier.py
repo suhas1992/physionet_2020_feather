@@ -37,6 +37,9 @@ def load_pytorch():
     checkpoint = torch.load(filepath)
     model.load_state_dict(checkpoint['model_state_dict'])
 
+    if drive:
+        shutil.rmtree(filepath)
+
     return model
 
 def classify_pytorch(data, model):
