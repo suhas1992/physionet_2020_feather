@@ -4,6 +4,9 @@ import numpy as np
 import joblib
 from get_12ECG_features import get_12ECG_features
 
+keyword = 'pytorch'
+lang_dict = {'pytorch':{'model':load_pytorch}}
+
 def run_12ECG_classifier(data,header_data,classes,model):
 
     num_classes = len(classes)
@@ -45,3 +48,6 @@ def load_12ECG_model():
     loaded_model = joblib.load(filename)
 
     return loaded_model
+
+def load_pytorch(path):
+    filename="/share/workhorse3/vsanil/"

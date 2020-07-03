@@ -1,4 +1,5 @@
 import os
+import math 
 import main as mn 
 import config as cfg 
 from networks.rnn import RNN 
@@ -55,8 +56,8 @@ if __name__ == "__main__":
     criterion = nn.BCELoss()
     criterion.to(cfg.DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, threshold=0.01)
-    best_recall = 0.0
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=5, threshold=0.01, mode='max')
+    best_f1 = 0.0
 
     for i in range(cfg.EPOCH):
         print("\nEpoch number: ", i)
@@ -66,11 +67,17 @@ if __name__ == "__main__":
 
         # Evaluate the model
         model.eval()
-        accuracy, loss, recall = mn.eval(model, val_loader, criterion, i)
+        accuracy, loss, recall, precision = mn.eval(model, val_loader, criterion, i)
+
+        # Compute f1 and check if it is nan
+        f1 = 2*((precision * recall) / (precision + recall))
+        f1 = float(f1)
+        if math.isnan(f1):
+            f1 = 0.0
         
-        if recall > best_recall:
+        if f1 > best_f1:
             save(model, optimizer, path)
-            best_recall = recall
+            best_f1 = f1
 
         # Step through the scheduler
-        scheduler.step(loss)
+        scheduler.step(accuracy)

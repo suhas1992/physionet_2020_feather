@@ -108,4 +108,4 @@ def eval(Model, Evalloader, Criterion, Epoch):
           "Total Recall: ", recall, 
           "Total Precision: ", precision)
     
-    return accuracy, tot_loss/(batch_num+1), recall
+    return accuracy, tot_loss/(batch_num+1), recall, precision
