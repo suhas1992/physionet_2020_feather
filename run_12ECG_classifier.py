@@ -60,25 +60,9 @@ def run_12ECG_classifier(data,header_data,classes,model):
     feats_reshape = features.reshape(1,-1)
 
     preds = lang_dict[keyword]['classify'](data, model)
-    print(preds)
-    print(preds.shape)
-    exit()
-    
 
-    max_prob_1 = 0
-    max_prob_index = 0
-    for i, probs in enumerate(prob_score):
-        prob_0 = probs[0][0]
-        prob_1 = probs[0][1]
-        
-        score[i] = prob_1
-        if prob_1 > 0.5:
-            label[i] = 1
-        if prob_1 > max_prob_1:
-            max_prob_1 = prob_1
-            max_prob_index = i
-    label[max_prob_index] = 1
-    
+    label = np.where(preds > 0.5, 1, 0)
+    score = preds
 
     return label, score
 
