@@ -12,7 +12,7 @@ from get_12ECG_features import get_12ECG_features
 
 # Language defined keyword
 keyword = 'pytorch'
-drive = False
+drive = True
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_pytorch():
