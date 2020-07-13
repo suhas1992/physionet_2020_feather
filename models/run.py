@@ -1,5 +1,6 @@
 import os
 import math 
+import argparse 
 import main as mn 
 import config as cfg 
 from networks.rnn import RNN 
@@ -17,6 +18,16 @@ def save(model,optimizer,path):
                },os.path.join(path,"best_model.pth"))
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-i", "--datadir", required=True,
+                        help="Complete input directory")
+    args = parser.parse_args()
+
+    if not os.path.exists(args.datadir):
+        print("Path does not exist")
+        exit()
+
     # Define model parameters
     train_loader = get_loader("train")
     val_loader = get_loader("val")
