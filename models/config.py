@@ -5,7 +5,7 @@ import torch
 EPOCH = 50
 BATCH_SIZE = 2
 RANDOM_SEED = 42
-NUM_WORKERS = 6
+NUM_WORKERS = 0
 PIN_MEMORY = True
 TRAIN_SPLIT = 0.75
 VAL_SPLIT = 0.2
@@ -16,6 +16,7 @@ DATA_PATH = "/home/vsanil/workhorse3/physionet/Training_WFDB/"
 DATA_DICT_PATH = "/home/vsanil/workhorse3/physionet/data.p"
 OBS_DICT_PATH = "/home/vsanil/workhorse3/physionet/observations.p"
 MAPPING_CSV_PATH = "dx_mapping_scored.csv"
+DATA_PATH = ""
 TARGETS = {}
 with open(MAPPING_CSV_PATH) as c:
     reads = csv.reader(c, delimiter=',')

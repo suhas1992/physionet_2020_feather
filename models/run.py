@@ -28,6 +28,7 @@ if __name__ == "__main__":
         print("Path does not exist")
         exit()
 
+    cfg.DATA_PATH = args.datadir
     # Define model parameters
     train_loader = get_loader("train")
     val_loader = get_loader("val")

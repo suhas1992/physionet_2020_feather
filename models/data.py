@@ -2,25 +2,48 @@ import os
 import pickle 
 import numpy as np
 import config as cfg 
+from scipy.io import loadmat
 from sklearn.model_selection import train_test_split 
 
 import torch
 import torch.nn.utils.rnn as rnn
 from torch.utils.data import Dataset, DataLoader, random_split, sampler, Subset
 
+def load_challenge_data(filename):
+
+    x = loadmat(filename)
+    data = np.asarray(x['val'], dtype=np.float64)
+
+    new_file = filename.replace('.mat', '.hea')
+    input_header_file = os.path.join(new_file)
+
+    with open(input_header_file, 'r') as f:
+        header_data = f.readlines()
+
+    return data, header_data
+
 class ECGTrainSet(Dataset):
-    def __init__(self, feature_dict):
-        self.features = feature_dict['Feature']
-        self.label = feature_dict['Label']
-        self.strategy = "expand labels"
+    def __init__(self, filedir):
+        #self.features = feature_dict['Feature']
+        #self.label = feature_dict['Label']
+        #self.strategy = "expand labels"
+        self.files = [os.path.join(filedir, f) for f in os.listdir(filedir)]
+        self.labels = [0 for _ in list(cfg.TARGETS.keys())[1:]]
+        self.keys = {k:idx for idx, k in enumerate(list(cfg.TARGETS.keys())[1:])}
 
     def __len__(self):
-        return len(self.features)
+        return len(self.files)
 
     def __getitem__(self, index):
-        f = torch.transpose(torch.from_numpy(self.features[index]).float(), 0, 1)
+        data, header = load_challenge_data(self.files[index])
+        label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
+        l = self.labels
+        for lbl in label:
+            l[self.keys[lbl]] = 1
+    
+        f = torch.transpose(torch.from_numpy(data).float(), 0, 1)
 
-        l = torch.FloatTensor(self.label[index]).unsqueeze(0)
+        l = torch.FloatTensor(l).unsqueeze(0)
 
         return f, l
 
@@ -73,8 +96,8 @@ def get_loader(loader_type):
         Returns:
             dataloader object
     """
-    feature_dict = load_pickle(cfg.OBS_DICT_PATH)
-    dataset = ECGTrainSet(feature_dict)
+    #feature_dict = load_pickle(cfg.OBS_DICT_PATH)
+    dataset = ECGTrainSet(cfg.DATA_PATH)
     #train_sampler, val_sampler, test_sampler = train_val_test_split(dataset)
     #config_dict['train']['sampler'] = train_sampler
     #config_dict['val']['sampler'] = val_sampler
