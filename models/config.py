@@ -1,3 +1,4 @@
+import csv
 import torch
 
 # DEFINE PROGRAM CONSTANTS HERE
@@ -14,4 +15,10 @@ DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 DATA_PATH = "/home/vsanil/workhorse3/physionet/Training_WFDB/"
 DATA_DICT_PATH = "/home/vsanil/workhorse3/physionet/data.p"
 OBS_DICT_PATH = "/home/vsanil/workhorse3/physionet/observations.p"
+MAPPING_CSV_PATH = "dx_mapping_scored.csv"
+TARGETS = {}
+with open(MAPPING_CSV_PATH) as c:
+    reads = csv.reader(c, delimiter=',')
+    for row in reads:
+        TARGETS[row[1]] = row[2]
 TARGET_NAMES = ['AF', 'I-AVB', 'LBBB', 'Normal', 'PAC', 'PVC', 'RBBB','STD','STE']
