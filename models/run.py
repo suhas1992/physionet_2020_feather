@@ -3,11 +3,14 @@ import math
 import argparse 
 import main as mn 
 import config as cfg 
+import numpy as np
+from scipy.io import loadmat
 from networks.rnn import RNN 
 from networks.mobile import mobileNet
 from networks.resnext import ResNet, Bottleneck, BasicBlock
 from torchsummary import summary 
-from data import get_loader
+import data as dt
+#from data import get_loader
 
 import torch
 import torch.nn as nn
@@ -16,6 +19,39 @@ def save(model,optimizer,path):
     torch.save({'model_state_dict':model.state_dict(),
                 'optimizer_state_dict':optimizer.state_dict()
                },os.path.join(path,"best_model.pth"))
+
+def load_challenge_data(filename):
+
+    x = loadmat(filename)
+    data = np.asarray(x['val'], dtype=np.float64)
+
+    new_file = filename.replace('.mat', '.hea')
+    input_header_file = os.path.join(new_file)
+
+    with open(input_header_file, 'r') as f:
+        header_data = f.readlines()
+
+    return data, header_data
+
+def extract_challenge_data(files):
+    invalid_count = 0
+    feature_dict = {'features':[], 'labels':[]}
+    labels = [0 for _ in list(cfg.TARGETS.keys())[1:]]
+    keys = {k:idx for idx, k in enumerate(list(cfg.TARGETS.keys())[1:])}
+
+    for idx, f in enumerate(files):
+        try:
+            data, header = load_challenge_data(f)
+            label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
+            l = labels
+            for lbl in label:
+                l[self.keys[lbl]] = 1
+            feature_dict['features'].append(data)
+            feature_dict['labels'].append(l) 
+        except:
+            invalid_count += 1
+
+    return feature_dict, invalid_count
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -29,9 +65,15 @@ if __name__ == "__main__":
         exit()
 
     cfg.DATA_PATH = args.datadir
+    files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+    feature_dict, invalid_count = extract_challenge_data(files)
+
+    print("Number of invalid files: ", invalid_count)
+    dt.FEATURE_DICT = feature_dict
+    
     # Define model parameters
-    train_loader = get_loader("train")
-    val_loader = get_loader("val")
+    train_loader = dt.get_loader("train")
+    val_loader = dt.get_loader("val")
 
     input_dim = 12
     hidden_list = [24, 16, 16, 12, 9]
@@ -47,7 +89,7 @@ if __name__ == "__main__":
     [ 6, 160, 3, 2],
     [ 6, 320, 1, 1]]
 
-    output_dim = 9
+    output_dim = len(cfg.TARGETS)-1
 
     #model = MLP(input_dim, hidden_list, output_dim)
     #model = RNN(input_dim, input_dim, output_dim)
