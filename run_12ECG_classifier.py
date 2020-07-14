@@ -17,7 +17,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_pytorch():
     if drive:
-        file_id = "125FLLN21q4dvFGlIWTwUN83BdeGkE5Un"
+        file_id = "19a6NN8-EWDxDFpcEilEa2gNp85rxd1oR"
         tempdir = tempfile.mkdtemp()
         filepath = os.path.join(tempdir,'best_model.pth')
         f = open(filepath, 'wb')
