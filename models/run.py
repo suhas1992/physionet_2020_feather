@@ -35,21 +35,24 @@ def load_challenge_data(filename):
 
 def extract_challenge_data(files):
     invalid_count = 0
+    count = 0
     feature_dict = {'features':[], 'labels':[]}
     labels = [0 for _ in list(cfg.TARGETS.keys())[1:]]
     keys = {k:idx for idx, k in enumerate(list(cfg.TARGETS.keys())[1:])}
+    print(keys)
 
     for idx, f in enumerate(files):
-        try:
+        if f.endswith('.mat'):
+            print(count, f, idx)
             data, header = load_challenge_data(f)
             label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
             l = labels
             for lbl in label:
-                l[self.keys[lbl]] = 1
+                l[keys[lbl]] = 1
             feature_dict['features'].append(data)
             feature_dict['labels'].append(l) 
-        except:
-            invalid_count += 1
+            count += 1
+            print("Here", count)
 
     return feature_dict, invalid_count
 
