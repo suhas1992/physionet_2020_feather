@@ -1,5 +1,7 @@
 import os
 import math 
+import pickle 
+import psutil
 import argparse 
 import main as mn 
 import config as cfg 
@@ -20,6 +22,11 @@ def save(model,optimizer,path):
                 'optimizer_state_dict':optimizer.state_dict()
                },os.path.join(path,"best_model.pth"))
 
+# Save data in pickle format
+def save_pickle(path, data_dict, filename):
+    with open(os.path.join(path, '{}.p'.format(filename)), 'wb') as fp:
+        pickle.dump(data_dict, fp, protocol=pickle.HIGHEST_PROTOCOL)
+
 def load_challenge_data(filename):
 
     x = loadmat(filename)
@@ -39,20 +46,26 @@ def extract_challenge_data(files):
     feature_dict = {'features':[], 'labels':[]}
     labels = [0 for _ in list(cfg.TARGETS.keys())[1:]]
     keys = {k:idx for idx, k in enumerate(list(cfg.TARGETS.keys())[1:])}
-    print(keys)
 
     for idx, f in enumerate(files):
         if f.endswith('.mat'):
-            print(count, f, idx)
+            #print(count, f, idx)
+            if count % 1000 == 0:
+                print("RAM used: ", psutil.virtual_memory().percent, "Files done: ", count)
             data, header = load_challenge_data(f)
             label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
-            l = labels
+            l = labels.copy()
+            add = False 
             for lbl in label:
-                l[keys[lbl]] = 1
-            feature_dict['features'].append(data)
-            feature_dict['labels'].append(l) 
+                try:
+                    l[keys[lbl]] = 1
+                    add = True
+                except KeyError:
+                    continue
+            if add:
+                feature_dict['features'].append(data)
+                feature_dict['labels'].append(l) 
             count += 1
-            print("Here", count)
 
     return feature_dict, invalid_count
 
@@ -67,13 +80,23 @@ if __name__ == "__main__":
         print("Path does not exist")
         exit()
 
+    
     cfg.DATA_PATH = args.datadir
-    files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
-    feature_dict, invalid_count = extract_challenge_data(files)
+
+    # Check if observation dictionary already exists, don't extract if yes
+    if os.path.exists(os.path.join(args.datadir, 'obs.p')):
+        with open(os.path.join(args.datadir, 'obs.p'), 'rb') as fp:
+            feature_dict = pickle.load(fp)
+    else:
+        files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+        feature_dict, invalid_count = extract_challenge_data(files)
+        print("Data extracted")
+        save_pickle(args.datadir, feature_dict, 'obs')
 
     print("Number of invalid files: ", invalid_count)
     dt.FEATURE_DICT = feature_dict
-    
+    del feature_dict
+
     # Define model parameters
     train_loader = dt.get_loader("train")
     val_loader = dt.get_loader("val")
