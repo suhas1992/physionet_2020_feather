@@ -85,6 +85,7 @@ if __name__ == "__main__":
 
     # Check if observation dictionary already exists, don't extract if yes
     if os.path.exists(os.path.join(args.datadir, 'obs.p')):
+        print("Data exists, load features")
         with open(os.path.join(args.datadir, 'obs.p'), 'rb') as fp:
             feature_dict = pickle.load(fp)
     else:
@@ -93,7 +94,6 @@ if __name__ == "__main__":
         print("Data extracted")
         save_pickle(args.datadir, feature_dict, 'obs')
 
-    print("Number of invalid files: ", invalid_count)
     dt.FEATURE_DICT = feature_dict
     del feature_dict
 

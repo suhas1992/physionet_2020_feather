@@ -23,7 +23,7 @@ def print_multilabel_report(true_labels, preds):
     tot_misclass = 0.0
 
     for i, cm in enumerate(ml_cm):
-        print("Confusion Matrix: {}".format(cfg.TARGET_NAMES[i]))
+        print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]))
         cm_df = pd.DataFrame(data=cm, index=I, columns=C)
 
         print(cm_df)
