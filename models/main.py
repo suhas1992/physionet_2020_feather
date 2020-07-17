@@ -72,7 +72,7 @@ def eval(Model, Evalloader, Criterion, Epoch, filehandler=None):
         features, labels = features.to(cfg.DEVICE), labels.to(cfg.DEVICE)
 
         pred = Model(features)
-
+        
         # Compute loss 
         loss = Criterion(pred, labels)
 
