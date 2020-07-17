@@ -21,6 +21,7 @@ def print_multilabel_report(true_labels, preds, filehandler=None):
     tot_prec = 0.0 
     tot_rec = 0.0
     tot_misclass = 0.0
+    tot_f1 = 0.0
 
     for i, cm in enumerate(ml_cm):
         cm_df = pd.DataFrame(data=cm, index=I, columns=C)
@@ -35,14 +36,16 @@ def print_multilabel_report(true_labels, preds, filehandler=None):
         misclass_rate = 1 - accuracy
         recall = tp / (tp + fn)
         precision = tp / (tp + fp)
+        f1 = 2*(recall * precision) / (recall + precision)
 
         if filehandler:
-            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]), file=filehandler)
+            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i+1]), file=filehandler)
             print(cm_df, file=filehandler)
             print("Accuracy: ", accuracy, 
                   "Misclassification Rate: ", misclass_rate,
                   "Recall: ", recall, 
                   "Precision: ", precision,
+                  "F1: ", f1,
                   file=filehandler) 
         else:
             print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]))
@@ -56,6 +59,7 @@ def print_multilabel_report(true_labels, preds, filehandler=None):
         tot_prec += precision
         tot_rec += recall 
         tot_misclass += misclass_rate
+        tot_f1 += f1
         
     i += 1
-    return tot_acc/i, tot_prec/i, tot_rec/i, tot_misclass/i
+    return tot_acc/i, tot_prec/i, tot_rec/i, tot_misclass/i, tot_f1/i
