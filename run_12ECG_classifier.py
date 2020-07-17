@@ -6,14 +6,17 @@ import joblib
 import shutil 
 import tempfile 
 import torch
-import config as runcfg 
 from download import download_file_from_google_drive
 from models.networks.resnext import ResNet, BasicBlock
 from get_12ECG_features import get_12ECG_features
 
 # Language defined keyword
 keyword = 'pytorch'
-drive = runcfg.USE_DRIVE
+drive = False
+with open("checks.txt", 'r') as f:
+    for lines in f:
+        if lines == "False":
+            drive = True
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_pytorch(input_directory):
@@ -24,6 +27,7 @@ def load_pytorch(input_directory):
         filepath = os.path.join(tempdir,'best_model.pth')
         f = open(filepath, 'wb')
         download_file_from_google_drive(file_id, filepath)
+        print("Model receieved!")
     else:
         filepath = input_directory
 
@@ -74,5 +78,16 @@ def run_12ECG_classifier(data,header_data,classes,model):
 def load_12ECG_model(input_directory):
     # load the model from disk 
     loaded_model = lang_dict[keyword]['model'](input_directory)
+
+    # Change file config to false
+    vals = []
+    with open("checks.txt", "r") as fr:
+        for lines in fr:
+            vals.append(fr)
+
+    vals[0] = "False"
+    with open("checks.txt", "w") as f:
+        for v in vals:
+            f.write("{}\n".format(v))
 
     return loaded_model

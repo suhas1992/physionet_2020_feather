@@ -69,6 +69,76 @@ def extract_challenge_data(files):
 
     return feature_dict, invalid_count
 
+def train(input_directory, num_classes, val_exists):
+    cfg.DATA_PATH = input_directory
+
+    
+    files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+    feature_dict, invalid_count = extract_challenge_data(files)
+    print("Data extracted")
+
+    dt.FEATURE_DICT = feature_dict
+    del feature_dict
+
+    # Define model parameters
+    train_loader = dt.get_loader("train", val_exists)
+    if val_exists:
+        val_loader = dt.get_loader("val", val_exists)
+
+    # Model params for mobilenet
+    mobile_model_params = [
+    # t   c   n  s
+    [ 1,  16, 1, 1],
+    [ 6,  24, 3, 1],
+    [ 6,  32, 4, 2],
+    [ 6,  64, 5, 3],
+    [ 6,  96, 3, 2],
+    [ 6, 160, 3, 2],
+    [ 6, 320, 1, 1]]
+
+    output_dim = len(cfg.TARGETS)-1
+
+    #model = MLP(input_dim, hidden_list, output_dim)
+    #model = RNN(input_dim, input_dim, output_dim)
+    #model = mobileNet(input_dim, mobile_model_params, output_dim)
+    #"""
+    model = ResNet(BasicBlock, [2,2,2,2], 
+                   num_classes=output_dim, 
+                   groups=32, 
+                   width_per_group=4)
+    #"""
+    model.to(cfg.DEVICE)
+
+    # Define training parameters
+    path = "/share/workhorse3/vsanil/physionet/best_models/"
+    criterion = nn.BCELoss()
+    criterion.to(cfg.DEVICE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=5, threshold=0.01, mode='max')
+    best_f1 = 0.0
+
+    if args.check == "True":
+        print("Checking best model's perfomance")
+        best_model_path = "/home/vsanil/workhorse3/physionet/best_models/best_model.pth"
+
+        # Load the model
+        checkpoint = torch.load(best_model_path)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        model.eval()
+        with open('checkfile.log', 'w') as f:
+            mn.eval(model, val_loader, criterion, 0, f)
+        print("Best model stats printed to checkfile.log")
+        exit()
+
+    # Print model summary
+    summary(model, (12, 10000))
+
+    for i in range(cfg.EPOCH):
+        print("\nEpoch number: ", i)
+        # Train the model
+        model.train()
+        model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
