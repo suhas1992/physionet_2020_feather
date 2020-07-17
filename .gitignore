@@ -1,3 +1,4 @@
 *.csv
 outputs/
 *.log
+*.pyc

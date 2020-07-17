@@ -101,7 +101,7 @@ def eval(Model, Evalloader, Criterion, Epoch, filehandler=None):
     true_labels = np.vstack(true_labels)
     preds = np.vstack(preds)
 
-    accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds)
+    accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds, filehandler)
     
     if filehandler:
         print("\n\n\nTotal Accuracy: ", accuracy, 
