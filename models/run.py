@@ -45,6 +45,7 @@ def load_challenge_data(filename):
 def extract_challenge_data(files, classes):
     invalid_count = 0
     count = 0
+
     feature_dict = {'features':[], 'labels':[]}
     labels = [0 for _ in classes]
     keys = {k:idx for idx, k in enumerate(classes)}
@@ -52,7 +53,7 @@ def extract_challenge_data(files, classes):
     for idx, f in enumerate(files):
         if f.endswith('.mat'):
             #print(count, f, idx)
-            if count % 1000 == 0:
+            if count % 5000 == 0:
                 print("RAM used: ", psutil.virtual_memory().percent, "Files done: ", count)
             data, header = load_challenge_data(f)
             label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
@@ -73,21 +74,20 @@ def extract_challenge_data(files, classes):
 
 def train(input_directory, output_directory, classes, val_exists=True, use_dict=False):
     cfg.DATA_PATH = input_directory
-
     
     files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
     feature_dict, invalid_count = extract_challenge_data(files, classes)
     print("Data extracted")
 
-    dt.FEATURE_DICT = feature_dict
+    #dt.FEATURE_DICT = feature_dict
     #del feature_dict
-
+    print(len(feature_dict))
     # Define model parameters
-    train_loader = dt.get_loader("train", val_exists)
+    train_loader = dt.get_loader("train", val_exists, feature_dict)
     if val_exists:
-        val_loader = dt.get_loader("val", val_exists)
+        val_loader = dt.get_loader("val", val_exists, feature_dict)
 
-    output_dim = len(classes)-1
+    output_dim = len(classes)
     model = ResNet(BasicBlock, [2,2,2,2], 
                    num_classes=output_dim, 
                    groups=32, 

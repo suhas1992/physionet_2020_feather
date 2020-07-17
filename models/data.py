@@ -66,7 +66,7 @@ def load_pickle(path):
 
     return data
 
-def get_loader(loader_type, val_exists):
+def get_loader(loader_type, val_exists, feature_dict=None):
     """ Returns a PyTorch dataloader object for computation
         that batches features according to a collate function
 
@@ -77,8 +77,9 @@ def get_loader(loader_type, val_exists):
             dataloader object
     """
     #feature_dict = load_pickle(cfg.OBS_DICT_PATH)
+    if feature_dict:
+        FEATURE_DICT = feature_dict
     dataset = ECGTrainSet(FEATURE_DICT)
-    print("Total number of ECG files :", len(dataset))
     #train_sampler, val_sampler, test_sampler = train_val_test_split(dataset)
     #config_dict['train']['sampler'] = train_sampler
     #config_dict['val']['sampler'] = val_sampler
@@ -103,7 +104,7 @@ def get_loader(loader_type, val_exists):
                 loader_set = Subset(temp_set, test_idx)
     else:
         loader_set = dataset 
-
+    print("Total number of ECG files :", len(loader_set))
     loader = DataLoader(loader_set, 
                         num_workers=cfg.NUM_WORKERS, 
                         pin_memory=cfg.PIN_MEMORY, 
