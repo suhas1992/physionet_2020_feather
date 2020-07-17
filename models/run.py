@@ -74,6 +74,8 @@ if __name__ == "__main__":
 
     parser.add_argument("-i", "--datadir", required=True,
                         help="Complete input directory")
+    parser.add_argument("-c","--check", required=False, default="False",
+                        help="Check best model's performance")  
     args = parser.parse_args()
 
     if not os.path.exists(args.datadir):
@@ -128,9 +130,6 @@ if __name__ == "__main__":
     #"""
     model.to(cfg.DEVICE)
 
-    # Print model summary
-    summary(model, (12, 10000))
-
     # Define training parameters
     path = "/share/workhorse3/vsanil/physionet/best_models/"
     criterion = nn.BCELoss()
@@ -138,6 +137,22 @@ if __name__ == "__main__":
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=5, threshold=0.01, mode='max')
     best_f1 = 0.0
+
+    if args.check == "True":
+        print("Checking best model's perfomance")
+        best_model_path = "/home/vsanil/workhorse3/physionet/best_models/best_model.pth"
+
+        # Load the model
+        checkpoint = torch.load(best_model_path)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        model.eval()
+        with open('checkfile.log', 'w') as f:
+            mn.eval(model, val_loader, criterion, 0, f)
+        print("Best model stats printed to checkfile.log")
+        exit()
+
+    # Print model summary
+    summary(model, (12, 10000))
 
     for i in range(cfg.EPOCH):
         print("\nEpoch number: ", i)

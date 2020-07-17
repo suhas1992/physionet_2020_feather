@@ -48,7 +48,7 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
 
     return Model, Optimizer
 
-def eval(Model, Evalloader, Criterion, Epoch):
+def eval(Model, Evalloader, Criterion, Epoch, filehandler=None):
     """ Defines a evaluation structure that considers the model, optimizer 
         and criterion and obtains data from a dataloader one batch at a 
         time.
@@ -102,10 +102,17 @@ def eval(Model, Evalloader, Criterion, Epoch):
     preds = np.vstack(preds)
 
     accuracy, precision, recall, misclass_rate = em.print_multilabel_report(true_labels, preds)
-
-    print("\n\n\nTotal Accuracy: ", accuracy, 
-          "Total Misclassification Rate: ", misclass_rate,
-          "Total Recall: ", recall, 
-          "Total Precision: ", precision)
+    
+    if filehandler:
+        print("\n\n\nTotal Accuracy: ", accuracy, 
+            "Total Misclassification Rate: ", misclass_rate,
+            "Total Recall: ", recall, 
+            "Total Precision: ", precision,
+            file=filehandler)
+    else:
+        print("Accuracy: ", accuracy, 
+              "Misclassification Rate: ", misclass_rate,
+              "Recall: ", recall, 
+              "Precision: ", precision)
     
     return accuracy, tot_loss/(batch_num+1), recall, precision

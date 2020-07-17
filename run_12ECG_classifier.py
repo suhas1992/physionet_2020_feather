@@ -26,7 +26,7 @@ def load_pytorch():
         filepath = '/home/vsanil/workhorse3/physionet/best_models/best_model.pth'
 
     # Define the model here
-    output_dim = 9
+    output_dim = 27
     model = ResNet(BasicBlock, [2,2,2,2], 
                    num_classes=output_dim, 
                    groups=32, 

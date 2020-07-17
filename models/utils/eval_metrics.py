@@ -12,7 +12,7 @@ def print_conf_mat(true_labels, preds):
 
     print("Confusion Matrix \n", cm_df)
 
-def print_multilabel_report(true_labels, preds):
+def print_multilabel_report(true_labels, preds, filehandler=None):
     warnings.filterwarnings("ignore")
     I = pd.Index(['True Negative', 'True Positive'], name="rows")
     C = pd.Index(['Predicted Negative', 'Predicted Positive'], name="columns")
@@ -23,10 +23,7 @@ def print_multilabel_report(true_labels, preds):
     tot_misclass = 0.0
 
     for i, cm in enumerate(ml_cm):
-        print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]))
         cm_df = pd.DataFrame(data=cm, index=I, columns=C)
-
-        print(cm_df)
 
         # Produce the mtrics from confusion matrix
         tp = cm[1,1]
@@ -39,10 +36,21 @@ def print_multilabel_report(true_labels, preds):
         recall = tp / (tp + fn)
         precision = tp / (tp + fp)
 
-        print("Accuracy: ", accuracy, 
-              "Misclassification Rate: ", misclass_rate,
-              "Recall: ", recall, 
-              "Precision: ", precision)
+        if filehandler:
+            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]), file=filehandler)
+            print(cm_df, file=filehandler)
+            print("Accuracy: ", accuracy, 
+                  "Misclassification Rate: ", misclass_rate,
+                  "Recall: ", recall, 
+                  "Precision: ", precision,
+                  file=filehandler) 
+        else:
+            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]))
+            print(cm_df)
+            print("Accuracy: ", accuracy, 
+                "Misclassification Rate: ", misclass_rate,
+                "Recall: ", recall, 
+                "Precision: ", precision)
 
         tot_acc += accuracy
         tot_prec += precision
