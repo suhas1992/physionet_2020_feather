@@ -48,7 +48,10 @@ def print_multilabel_report(true_labels, preds, filehandler=None, classes=None):
                   "F1: ", f1,
                   file=filehandler) 
         else:
-            print("Confusion Matrix: {}".format(cfg.TARGETS[classes[i]]))
+            if classes:
+                print("Confusion Matrix: {}".format(classes[i]))
+            else:    
+                print("Confusion Matrix: {}".format(cfg.TARGETS[classes[i]]))
             print(cm_df)
             print("Accuracy: ", accuracy, 
                 "Misclassification Rate: ", misclass_rate,

@@ -36,7 +36,7 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
         loss.backward()
         Optimizer.step()
 
-        if batch_num % 400 == 1:
+        if batch_num % 2000 == 1:
             curr_loss = float(loss.item())
             print("Epoch: ", Epoch, "Training Loss: ", curr_loss)
 
@@ -101,7 +101,7 @@ def eval(Model, Evalloader, Criterion, Epoch, filehandler=None, classes=None):
     true_labels = np.vstack(true_labels)
     preds = np.vstack(preds)
 
-    accuracy, precision, recall, misclass_rate, _ = em.print_multilabel_report(true_labels, preds, filehandler)
+    accuracy, precision, recall, misclass_rate, _ = em.print_multilabel_report(true_labels, preds, filehandler, classes)
     
     if filehandler:
         print("\n\n\nTotal Accuracy: ", accuracy, 
