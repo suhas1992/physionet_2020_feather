@@ -6,16 +6,17 @@ import joblib
 import shutil 
 import tempfile 
 import torch
+import config as runcfg 
 from download import download_file_from_google_drive
 from models.networks.resnext import ResNet, BasicBlock
 from get_12ECG_features import get_12ECG_features
 
 # Language defined keyword
 keyword = 'pytorch'
-drive = True
+drive = runcfg.USE_DRIVE
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def load_pytorch():
+def load_pytorch(input_directory):
     tempdir = ""
     if drive:
         file_id = "19a6NN8-EWDxDFpcEilEa2gNp85rxd1oR"
@@ -24,7 +25,7 @@ def load_pytorch():
         f = open(filepath, 'wb')
         download_file_from_google_drive(file_id, filepath)
     else:
-        filepath = '/home/vsanil/workhorse3/physionet/best_models/best_model.pth'
+        filepath = input_directory
 
     # Define the model here
     output_dim = 27
@@ -70,8 +71,8 @@ def run_12ECG_classifier(data,header_data,classes,model):
 
     return label, score
 
-def load_12ECG_model():
+def load_12ECG_model(input_directory):
     # load the model from disk 
-    loaded_model = lang_dict[keyword]['model']()
+    loaded_model = lang_dict[keyword]['model'](input_directory)
 
     return loaded_model
