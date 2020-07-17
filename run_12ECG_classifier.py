@@ -15,8 +15,9 @@ keyword = 'pytorch'
 drive = False
 with open("checks.txt", 'r') as f:
     for lines in f:
-        if lines == "False":
+        if "False" in lines:
             drive = True
+            break
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_pytorch(input_directory):
@@ -45,7 +46,7 @@ def load_pytorch(input_directory):
 
     if drive:
         shutil.rmtree(tempdir)
-
+        
     return model
 
 def classify_pytorch(data, model):

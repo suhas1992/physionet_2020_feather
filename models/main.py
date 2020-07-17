@@ -48,7 +48,7 @@ def train(Model, Trainloader, Optimizer, Criterion, Epoch):
 
     return Model, Optimizer
 
-def eval(Model, Evalloader, Criterion, Epoch, filehandler=None):
+def eval(Model, Evalloader, Criterion, Epoch, filehandler=None, classes=None):
     """ Defines a evaluation structure that considers the model, optimizer 
         and criterion and obtains data from a dataloader one batch at a 
         time.

@@ -66,7 +66,7 @@ def load_pickle(path):
 
     return data
 
-def get_loader(loader_type):
+def get_loader(loader_type, val_exists):
     """ Returns a PyTorch dataloader object for computation
         that batches features according to a collate function
 
@@ -83,23 +83,26 @@ def get_loader(loader_type):
     #config_dict['train']['sampler'] = train_sampler
     #config_dict['val']['sampler'] = val_sampler
     loader_set = None
-    if loader_type == "train":
-        train_idx, _ = train_test_split(list(range(len(dataset))), 
+    if val_exists:
+        if loader_type == "train":
+            train_idx, _ = train_test_split(list(range(len(dataset))), 
+                                            test_size=cfg.VAL_SPLIT+cfg.TEST_SPLIT,
+                                            shuffle=True, random_state=cfg.RANDOM_SEED)
+            loader_set = Subset(dataset, train_idx)
+        elif loader_type == "val" or loader_type == "test":
+            _, temp_idx = train_test_split(list(range(len(dataset))), 
                                         test_size=cfg.VAL_SPLIT+cfg.TEST_SPLIT,
                                         shuffle=True, random_state=cfg.RANDOM_SEED)
-        loader_set = Subset(dataset, train_idx)
-    elif loader_type == "val" or loader_type == "test":
-        _, temp_idx = train_test_split(list(range(len(dataset))), 
-                                       test_size=cfg.VAL_SPLIT+cfg.TEST_SPLIT,
-                                       shuffle=True, random_state=cfg.RANDOM_SEED)
-        temp_set = Subset(dataset, temp_idx)
-        val_idx, test_idx = train_test_split(list(range(len(temp_set))),
-                                             test_size= 1-(cfg.TEST_SPLIT/(cfg.VAL_SPLIT + cfg.TEST_SPLIT)),
-                                             shuffle=True, random_state=cfg.RANDOM_SEED)
-        if loader_type == "val":
-            loader_set = Subset(temp_set, val_idx)
-        else:
-            loader_set = Subset(temp_set, test_idx) 
+            temp_set = Subset(dataset, temp_idx)
+            val_idx, test_idx = train_test_split(list(range(len(temp_set))),
+                                                test_size= 1-(cfg.TEST_SPLIT/(cfg.VAL_SPLIT + cfg.TEST_SPLIT)),
+                                                shuffle=True, random_state=cfg.RANDOM_SEED)
+            if loader_type == "val":
+                loader_set = Subset(temp_set, val_idx)
+            else:
+                loader_set = Subset(temp_set, test_idx)
+    else:
+        loader_set = dataset 
 
     loader = DataLoader(loader_set, 
                         num_workers=cfg.NUM_WORKERS, 

@@ -12,7 +12,7 @@ def print_conf_mat(true_labels, preds):
 
     print("Confusion Matrix \n", cm_df)
 
-def print_multilabel_report(true_labels, preds, filehandler=None):
+def print_multilabel_report(true_labels, preds, filehandler=None, classes=None):
     warnings.filterwarnings("ignore")
     I = pd.Index(['True Negative', 'True Positive'], name="rows")
     C = pd.Index(['Predicted Negative', 'Predicted Positive'], name="columns")
@@ -39,7 +39,7 @@ def print_multilabel_report(true_labels, preds, filehandler=None):
         f1 = 2*(recall * precision) / (recall + precision)
 
         if filehandler:
-            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i+1]), file=filehandler)
+            print("Confusion Matrix: {}".format(cfg.TARGETS[classes[i]]), file=filehandler)
             print(cm_df, file=filehandler)
             print("Accuracy: ", accuracy, 
                   "Misclassification Rate: ", misclass_rate,
@@ -48,7 +48,7 @@ def print_multilabel_report(true_labels, preds, filehandler=None):
                   "F1: ", f1,
                   file=filehandler) 
         else:
-            print("Confusion Matrix: {}".format(list(cfg.TARGETS.values())[i]))
+            print("Confusion Matrix: {}".format(cfg.TARGETS[classes[i]]))
             print(cm_df)
             print("Accuracy: ", accuracy, 
                 "Misclassification Rate: ", misclass_rate,
