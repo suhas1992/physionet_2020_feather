@@ -16,6 +16,7 @@ drive = True
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_pytorch():
+    tempdir = ""
     if drive:
         file_id = "19a6NN8-EWDxDFpcEilEa2gNp85rxd1oR"
         tempdir = tempfile.mkdtemp()
@@ -38,7 +39,7 @@ def load_pytorch():
     model.load_state_dict(checkpoint['model_state_dict'])
 
     if drive:
-        shutil.rmtree(filepath)
+        shutil.rmtree(tempdir)
 
     return model
 
