@@ -12,19 +12,25 @@ from get_12ECG_features import get_12ECG_features
 
 # Language defined keyword
 keyword = 'pytorch'
-drive = True
+drive = False
+with open("checks.txt", 'r') as f:
+    for lines in f:
+        if "False" in lines:
+            drive = True
+            break
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def load_pytorch():
+def load_pytorch(input_directory):
     tempdir = ""
     if drive:
-        file_id = "19a6NN8-EWDxDFpcEilEa2gNp85rxd1oR"
+        file_id = "1ONP9cPL93MGqmtMbPDwZ_SBn7Z69iJss"
         tempdir = tempfile.mkdtemp()
         filepath = os.path.join(tempdir,'best_model.pth')
         f = open(filepath, 'wb')
         download_file_from_google_drive(file_id, filepath)
+        print("Model receieved!")
     else:
-        filepath = '/home/vsanil/workhorse3/physionet/best_models/best_model.pth'
+        filepath = input_directory
 
     # Define the model here
     output_dim = 27
@@ -40,7 +46,7 @@ def load_pytorch():
 
     if drive:
         shutil.rmtree(tempdir)
-
+        
     return model
 
 def classify_pytorch(data, model):
@@ -70,8 +76,19 @@ def run_12ECG_classifier(data,header_data,classes,model):
 
     return label, score
 
-def load_12ECG_model():
+def load_12ECG_model(input_directory):
     # load the model from disk 
-    loaded_model = lang_dict[keyword]['model']()
+    loaded_model = lang_dict[keyword]['model'](input_directory)
+
+    # Change file config to false
+    vals = []
+    with open("checks.txt", "r") as fr:
+        for lines in fr:
+            vals.append(fr)
+
+    vals[0] = "False"
+    with open("checks.txt", "w") as f:
+        for v in vals:
+            f.write("{}\n".format(v))
 
     return loaded_model

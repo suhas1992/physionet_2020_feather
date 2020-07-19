@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.append("models")
 import math 
 import pickle 
 import psutil
@@ -40,17 +42,18 @@ def load_challenge_data(filename):
 
     return data, header_data
 
-def extract_challenge_data(files):
+def extract_challenge_data(files, classes):
     invalid_count = 0
     count = 0
+
     feature_dict = {'features':[], 'labels':[]}
-    labels = [0 for _ in list(cfg.TARGETS.keys())[1:]]
-    keys = {k:idx for idx, k in enumerate(list(cfg.TARGETS.keys())[1:])}
+    labels = [0 for _ in classes]
+    keys = {k:idx for idx, k in enumerate(classes)}
 
     for idx, f in enumerate(files):
         if f.endswith('.mat'):
             #print(count, f, idx)
-            if count % 1000 == 0:
+            if count % 5000 == 0:
                 print("RAM used: ", psutil.virtual_memory().percent, "Files done: ", count)
             data, header = load_challenge_data(f)
             label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
@@ -68,6 +71,59 @@ def extract_challenge_data(files):
             count += 1
 
     return feature_dict, invalid_count
+
+def train(input_directory, output_directory, classes, val_exists=True, use_dict=False):
+    cfg.DATA_PATH = input_directory
+    
+    files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+    feature_dict, invalid_count = extract_challenge_data(files, classes)
+    print("Data extracted")
+
+    #dt.FEATURE_DICT = feature_dict
+    #del feature_dict
+    print(len(feature_dict))
+    # Define model parameters
+    train_loader = dt.get_loader("train", val_exists, feature_dict)
+    if val_exists:
+        val_loader = dt.get_loader("val", val_exists, feature_dict)
+
+    output_dim = len(classes)
+    model = ResNet(BasicBlock, [2,2,2,2], 
+                   num_classes=output_dim, 
+                   groups=32, 
+                   width_per_group=4)
+    model.to(cfg.DEVICE)
+
+    # Define training parameters
+    path = output_directory
+    criterion = nn.BCELoss()
+    criterion.to(cfg.DEVICE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=5, threshold=0.01, mode='max')
+    best_f1 = 0.0
+
+    for i in range(cfg.EPOCH):
+        print("\nEpoch number: ", i)
+        # Train the model
+        model.train()
+        model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
+
+        # Evaluate the model
+        model.eval()
+        accuracy, loss, recall, precision = mn.eval(model, val_loader, criterion, i, classes=classes)
+
+        # Compute f1 and check if it is nan
+        f1 = 2*((precision * recall) / (precision + recall))
+        f1 = float(f1)
+        if math.isnan(f1):
+            f1 = 0.0
+        
+        if f1 > best_f1:
+            save(model, optimizer, path)
+            best_f1 = f1
+
+        # Step through the scheduler
+        scheduler.step(accuracy)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
