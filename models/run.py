@@ -6,6 +6,7 @@ import pickle
 import psutil
 import argparse 
 import main as mn 
+import csv
 import config as cfg 
 import numpy as np
 from scipy.io import loadmat
@@ -71,6 +72,28 @@ def extract_challenge_data(files, classes):
             count += 1
 
     return feature_dict, invalid_count
+
+# Find unique classes.
+def get_classes(input_directory, train_27=False):
+    classes = set()
+    check_27_class = set()
+    with open("dx_mapping_scored.csv") as c:
+        reads = csv.reader(c, delimiter=',')
+        for row in reads:
+            check_27_class.add(row[1])
+
+    for f in os.listdir(input_directory):
+        filename = os.path.join(input_directory, f)
+        if filename.endswith('.hea'):
+            with open(filename, 'r') as f:
+                for l in f:
+                    if l.startswith('#Dx'):
+                        tmp = l.split(': ')[1].split(',')
+                        for c in tmp:
+                            if c in check_27_class:
+                                classes.add(c.strip())
+
+    return sorted(classes)
 
 def train(input_directory, output_directory, classes, val_exists=True, use_dict=False):
     cfg.DATA_PATH = input_directory
@@ -152,12 +175,9 @@ if __name__ == "__main__":
         print("Data extracted")
         save_pickle(args.datadir, feature_dict, 'obs')
 
-    dt.FEATURE_DICT = feature_dict
-    del feature_dict
-
     # Define model parameters
-    train_loader = dt.get_loader("train")
-    val_loader = dt.get_loader("val")
+    train_loader = dt.get_loader("train", feature_dict=feature_dict)
+    val_loader = dt.get_loader("val", feature_dict=feature_dict)
 
     input_dim = 12
     hidden_list = [24, 16, 16, 12, 9]
@@ -168,22 +188,22 @@ if __name__ == "__main__":
     [ 1,  16, 1, 1],
     [ 6,  24, 3, 1],
     [ 6,  32, 4, 2],
-    [ 6,  64, 5, 3],
+    [ 6,  64, 5, 2],
     [ 6,  96, 3, 2],
-    [ 6, 160, 3, 2],
+    [ 6, 160, 3, 1],
     [ 6, 320, 1, 1]]
 
     output_dim = len(cfg.TARGETS)-1
 
     #model = MLP(input_dim, hidden_list, output_dim)
     #model = RNN(input_dim, input_dim, output_dim)
-    #model = mobileNet(input_dim, mobile_model_params, output_dim)
-    #"""
+    model = mobileNet(input_dim, mobile_model_params, output_dim)
+    """
     model = ResNet(BasicBlock, [2,2,2,2], 
                    num_classes=output_dim, 
                    groups=32, 
                    width_per_group=4)
-    #"""
+    """
     model.to(cfg.DEVICE)
 
     # Define training parameters
@@ -209,6 +229,10 @@ if __name__ == "__main__":
 
     # Print model summary
     summary(model, (12, 10000))
+    num_classes = get_classes(args.datadir)
+
+    with open("checkfile.log", "w") as f:
+        print("::::::::: Logs ::::::::::", file=f)
 
     for i in range(cfg.EPOCH):
         print("\nEpoch number: ", i)
@@ -218,7 +242,8 @@ if __name__ == "__main__":
 
         # Evaluate the model
         model.eval()
-        accuracy, loss, recall, precision = mn.eval(model, val_loader, criterion, i)
+        with open("checkfile.log", "a") as f:
+            accuracy, loss, recall, precision = mn.eval(model, val_loader, criterion, i, f, classes=num_classes)
 
         # Compute f1 and check if it is nan
         f1 = 2*((precision * recall) / (precision + recall))

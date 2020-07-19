@@ -66,7 +66,7 @@ def load_pickle(path):
 
     return data
 
-def get_loader(loader_type, val_exists, feature_dict=None):
+def get_loader(loader_type, val_exists=True, feature_dict=None):
     """ Returns a PyTorch dataloader object for computation
         that batches features according to a collate function
 
