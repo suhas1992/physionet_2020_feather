@@ -197,13 +197,15 @@ if __name__ == "__main__":
 
     #model = MLP(input_dim, hidden_list, output_dim)
     #model = RNN(input_dim, input_dim, output_dim)
-    model = mobileNet(input_dim, mobile_model_params, output_dim)
-    """
+    #model = mobileNet(input_dim, mobile_model_params, output_dim)
+    #"""
     model = ResNet(BasicBlock, [2,2,2,2], 
                    num_classes=output_dim, 
                    groups=32, 
-                   width_per_group=4)
-    """
+                   width_per_group=4,
+                   all_depthwise=True, 
+                   )
+    #"""
     model.to(cfg.DEVICE)
 
     # Define training parameters

@@ -1,0 +1,498 @@
+Confusion Matrix: PR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1769                   0
+True Positive                 118                   0
+Accuracy:  0.9374668786433492 Misclassification Rate:  0.06253312135665079 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LQT
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1713                   2
+True Positive                 171                   1
+Accuracy:  0.908320084790673 Misclassification Rate:  0.09167991520932695 Recall:  0.005813953488372093 Precision:  0.3333333333333333 F1:  0.011428571428571429
+Confusion Matrix: AF
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1870                   0
+True Positive                  17                   0
+Accuracy:  0.990990990990991 Misclassification Rate:  0.009009009009009028 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: AFL
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1877                   0
+True Positive                  10                   0
+Accuracy:  0.994700582935877 Misclassification Rate:  0.005299417064122958 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1856                   0
+True Positive                  31                   0
+Accuracy:  0.9835718071012188 Misclassification Rate:  0.01642819289878117 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: QAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1809                   0
+True Positive                  78                   0
+Accuracy:  0.958664546899841 Misclassification Rate:  0.04133545310015896 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: TAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1800                   0
+True Positive                  87                   0
+Accuracy:  0.9538950715421304 Misclassification Rate:  0.04610492845786962 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LPR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1547                  26
+True Positive                 308                   6
+Accuracy:  0.8229994700582935 Misclassification Rate:  0.17700052994170645 Recall:  0.01910828025477707 Precision:  0.1875 F1:  0.034682080924855495
+Confusion Matrix: VPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1837                   0
+True Positive                  50                   0
+Accuracy:  0.9735029146793853 Misclassification Rate:  0.026497085320614677 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LQRSV
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1858                   0
+True Positive                  29                   0
+Accuracy:  0.9846316905140434 Misclassification Rate:  0.015368309485956577 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: IAVB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1823                   0
+True Positive                  64                   0
+Accuracy:  0.9660837307896132 Misclassification Rate:  0.03391626921038682 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: PAC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1868                   0
+True Positive                  19                   0
+Accuracy:  0.9899311075781664 Misclassification Rate:  0.01006889242183362 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1797                   0
+True Positive                  90                   0
+Accuracy:  0.9523052464228935 Misclassification Rate:  0.04769475357710651 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: SB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1880                   0
+True Positive                   7                   0
+Accuracy:  0.9962904080551139 Misclassification Rate:  0.0037095919448860704 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: Brady
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1860                   0
+True Positive                  27                   0
+Accuracy:  0.985691573926868 Misclassification Rate:  0.014308426073131986 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: SNR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1794                   7
+True Positive                  86                   0
+Accuracy:  0.9507154213036566 Misclassification Rate:  0.049284578696343395 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: STach
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1822                  13
+True Positive                  52                   0
+Accuracy:  0.9655537890832009 Misclassification Rate:  0.034446210916799114 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: PVC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1868                   0
+True Positive                  19                   0
+Accuracy:  0.9899311075781664 Misclassification Rate:  0.01006889242183362 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: SA
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1777                   0
+True Positive                 110                   0
+Accuracy:  0.9417064122946476 Misclassification Rate:  0.05829358770535242 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LAnFB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1630                 195
+True Positive                  54                   8
+Accuracy:  0.8680445151033387 Misclassification Rate:  0.1319554848966613 Recall:  0.12903225806451613 Precision:  0.03940886699507389 F1:  0.06037735849056604
+Confusion Matrix: RAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1767                   0
+True Positive                 120                   0
+Accuracy:  0.9364069952305246 Misclassification Rate:  0.06359300476947538 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: RBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 172                 679
+True Positive                  51                 985
+Accuracy:  0.6131425543190249 Misclassification Rate:  0.38685744568097513 Recall:  0.9507722007722008 Precision:  0.5919471153846154 F1:  0.7296296296296297
+Confusion Matrix: TInv
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1763                   0
+True Positive                 124                   0
+Accuracy:  0.9342872284048754 Misclassification Rate:  0.06571277159512456 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: SVPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1876                   0
+True Positive                  11                   0
+Accuracy:  0.9941706412294647 Misclassification Rate:  0.005829358770535253 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: NSIVCB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1226                 430
+True Positive                 189                  42
+Accuracy:  0.6719660837307896 Misclassification Rate:  0.3280339162692104 Recall:  0.18181818181818182 Precision:  0.08898305084745763 F1:  0.11948790896159317
+Confusion Matrix: IRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1656                 160
+True Positive                  63                   8
+Accuracy:  0.8818229994700583 Misclassification Rate:  0.11817700052994173 Recall:  0.11267605633802817 Precision:  0.047619047619047616 F1:  0.06694560669456066
+Confusion Matrix: CRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1866                   0
+True Positive                  21                   0
+Accuracy:  0.9888712241653418 Misclassification Rate:  0.011128775834658211 Recall:  0.0 Precision:  nan F1:  nan
+
+
+
+Total Accuracy:  0.9309505584015388 Total Misclassification Rate:  0.06904944159846121 Total Recall:  0.0518229974346695 Total Precision:  nan Total F1 Score:  nan
+Confusion Matrix: PR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1766                   3
+True Positive                 118                   0
+Accuracy:  0.9358770535241123 Misclassification Rate:  0.06412294647588768 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: LQT
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1318                 397
+True Positive                  90                  82
+Accuracy:  0.7419183889772125 Misclassification Rate:  0.2580816110227875 Recall:  0.47674418604651164 Precision:  0.17118997912317327 F1:  0.2519201228878648
+Confusion Matrix: AF
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1513                 357
+True Positive                  14                   3
+Accuracy:  0.8033916269210387 Misclassification Rate:  0.19660837307896128 Recall:  0.17647058823529413 Precision:  0.008333333333333333 F1:  0.015915119363395226
+Confusion Matrix: AFL
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1870                   7
+True Positive                  10                   0
+Accuracy:  0.990990990990991 Misclassification Rate:  0.009009009009009028 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: LBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1856                   0
+True Positive                  31                   0
+Accuracy:  0.9835718071012188 Misclassification Rate:  0.01642819289878117 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: QAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1809                   0
+True Positive                  78                   0
+Accuracy:  0.958664546899841 Misclassification Rate:  0.04133545310015896 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: TAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1767                  33
+True Positive                  83                   4
+Accuracy:  0.9385267620561738 Misclassification Rate:  0.0614732379438262 Recall:  0.04597701149425287 Precision:  0.10810810810810811 F1:  0.06451612903225806
+Confusion Matrix: LPR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1523                  50
+True Positive                 277                  37
+Accuracy:  0.8267090620031796 Misclassification Rate:  0.17329093799682038 Recall:  0.1178343949044586 Precision:  0.42528735632183906 F1:  0.18453865336658354
+Confusion Matrix: VPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1837                   0
+True Positive                  50                   0
+Accuracy:  0.9735029146793853 Misclassification Rate:  0.026497085320614677 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: LQRSV
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1763                  95
+True Positive                  29                   0
+Accuracy:  0.9342872284048754 Misclassification Rate:  0.06571277159512456 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: IAVB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1510                 313
+True Positive                  51                  13
+Accuracy:  0.8071012188659248 Misclassification Rate:  0.19289878113407521 Recall:  0.203125 Precision:  0.03987730061349693 F1:  0.06666666666666667
+Confusion Matrix: PAC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1609                 259
+True Positive                  16                   3
+Accuracy:  0.854266030736619 Misclassification Rate:  0.145733969263381 Recall:  0.15789473684210525 Precision:  0.011450381679389313 F1:  0.021352313167259787
+Confusion Matrix: LAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1512                 285
+True Positive                  77                  13
+Accuracy:  0.8081611022787494 Misclassification Rate:  0.19183889772125062 Recall:  0.14444444444444443 Precision:  0.0436241610738255 F1:  0.06701030927835051
+Confusion Matrix: SB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1879                   1
+True Positive                   7                   0
+Accuracy:  0.9957604663487016 Misclassification Rate:  0.004239533651298366 Recall:  0.0 Precision:  0.0 F1:  nan
+Confusion Matrix: Brady
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1534                 326
+True Positive                  24                   3
+Accuracy:  0.8145204027556969 Misclassification Rate:  0.18547959724430307 Recall:  0.1111111111111111 Precision:  0.00911854103343465 F1:  0.016853932584269662
+Confusion Matrix: SNR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1487                 314
+True Positive                  72                  14
+Accuracy:  0.7954425013248543 Misclassification Rate:  0.20455749867514572 Recall:  0.16279069767441862 Precision:  0.042682926829268296 F1:  0.0676328502415459
+Confusion Matrix: STach
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1585                 250
+True Positive                  48                   4
+Accuracy:  0.8420773714891362 Misclassification Rate:  0.1579226285108638 Recall:  0.07692307692307693 Precision:  0.015748031496062992 F1:  0.0261437908496732
+Confusion Matrix: PVC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1868                   0
+True Positive                  19                   0
+Accuracy:  0.9899311075781664 Misclassification Rate:  0.01006889242183362 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: SA
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1618                 159
+True Positive                  91                  19
+Accuracy:  0.8675145733969264 Misclassification Rate:  0.1324854266030736 Recall:  0.17272727272727273 Precision:  0.10674157303370786 F1:  0.13194444444444445
+Confusion Matrix: LAnFB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1491                 334
+True Positive                  48                  14
+Accuracy:  0.7975622681505035 Misclassification Rate:  0.20243773184949654 Recall:  0.22580645161290322 Precision:  0.040229885057471264 F1:  0.06829268292682926
+Confusion Matrix: RAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1694                  73
+True Positive                  66                  54
+Accuracy:  0.926338102808691 Misclassification Rate:  0.073661897191309 Recall:  0.45 Precision:  0.4251968503937008 F1:  0.437246963562753
+Confusion Matrix: RBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 474                 377
+True Positive                 198                 838
+Accuracy:  0.6952835188129306 Misclassification Rate:  0.3047164811870694 Recall:  0.8088803088803089 Precision:  0.6897119341563785 F1:  0.7445579742336739
+Confusion Matrix: TInv
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1353                 410
+True Positive                  12                 112
+Accuracy:  0.7763645998940116 Misclassification Rate:  0.22363540010598837 Recall:  0.9032258064516129 Precision:  0.21455938697318008 F1:  0.34674922600619196
+Confusion Matrix: SVPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1876                   0
+True Positive                  11                   0
+Accuracy:  0.9941706412294647 Misclassification Rate:  0.005829358770535253 Recall:  0.0 Precision:  nan F1:  nan
+Confusion Matrix: NSIVCB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1342                 314
+True Positive                 188                  43
+Accuracy:  0.7339692633810281 Misclassification Rate:  0.2660307366189719 Recall:  0.18614718614718614 Precision:  0.12044817927170869 F1:  0.14625850340136054
+Confusion Matrix: IRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1535                 281
+True Positive                  60                  11
+Accuracy:  0.8192898781134075 Misclassification Rate:  0.18071012188659252 Recall:  0.15492957746478872 Precision:  0.03767123287671233 F1:  0.0606060606060606
+Confusion Matrix: CRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1578                 288
+True Positive                  15                   6
+Accuracy:  0.8394276629570747 Misclassification Rate:  0.16057233704292528 Recall:  0.2857142857142857 Precision:  0.02040816326530612 F1:  0.038095238095238085
+
+
+
+Total Accuracy:  0.8683192996918491 Total Misclassification Rate:  0.1316807003081513 Total Recall:  0.1800276346916308 Total Precision:  nan Total F1 Score:  nan
+Confusion Matrix: PR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 914                 855
+True Positive                  64                  54
+Accuracy:  0.5129835718071012 Misclassification Rate:  0.4870164281928988 Recall:  0.4576271186440678 Precision:  0.0594059405940594 F1:  0.10516066212268745
+Confusion Matrix: LQT
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 534                1181
+True Positive                  43                 129
+Accuracy:  0.35135135135135137 Misclassification Rate:  0.6486486486486487 Recall:  0.75 Precision:  0.0984732824427481 F1:  0.17408906882591094
+Confusion Matrix: AF
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 721                1149
+True Positive                   9                   8
+Accuracy:  0.3863275039745628 Misclassification Rate:  0.6136724960254372 Recall:  0.47058823529411764 Precision:  0.006914433880726016 F1:  0.013628620102214653
+Confusion Matrix: AFL
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 900                 977
+True Positive                   1                   9
+Accuracy:  0.48171701112877585 Misclassification Rate:  0.5182829888712241 Recall:  0.9 Precision:  0.009127789046653144 F1:  0.018072289156626505
+Confusion Matrix: LBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 830                1026
+True Positive                  23                   8
+Accuracy:  0.4440911499735029 Misclassification Rate:  0.555908850026497 Recall:  0.25806451612903225 Precision:  0.007736943907156673 F1:  0.015023474178403756
+Confusion Matrix: QAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 845                 964
+True Positive                  31                  47
+Accuracy:  0.4727080021197668 Misclassification Rate:  0.5272919978802332 Recall:  0.6025641025641025 Precision:  0.04648862512363996 F1:  0.08631772268135904
+Confusion Matrix: TAb
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 967                 833
+True Positive                  62                  25
+Accuracy:  0.5257021727609963 Misclassification Rate:  0.4742978272390037 Recall:  0.28735632183908044 Precision:  0.029137529137529136 F1:  0.0529100529100529
+Confusion Matrix: LPR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 762                 811
+True Positive                 145                 169
+Accuracy:  0.4933757286698463 Misclassification Rate:  0.5066242713301536 Recall:  0.5382165605095541 Precision:  0.17244897959183675 F1:  0.26120556414219476
+Confusion Matrix: VPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 870                 967
+True Positive                  45                   5
+Accuracy:  0.4636989931107578 Misclassification Rate:  0.5363010068892422 Recall:  0.1 Precision:  0.0051440329218107 F1:  0.009784735812133072
+Confusion Matrix: LQRSV
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 711                1147
+True Positive                   2                  27
+Accuracy:  0.39109697933227344 Misclassification Rate:  0.6089030206677266 Recall:  0.9310344827586207 Precision:  0.022998296422487224 F1:  0.04488778054862843
+Confusion Matrix: IAVB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 935                 888
+True Positive                  44                  20
+Accuracy:  0.5060943296237413 Misclassification Rate:  0.49390567037625865 Recall:  0.3125 Precision:  0.022026431718061675 F1:  0.0411522633744856
+Confusion Matrix: PAC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                1003                 865
+True Positive                  17                   2
+Accuracy:  0.5325914149443561 Misclassification Rate:  0.46740858505564387 Recall:  0.10526315789473684 Precision:  0.002306805074971165 F1:  0.004514672686230249
+Confusion Matrix: LAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 781                1016
+True Positive                  32                  58
+Accuracy:  0.4446210916799152 Misclassification Rate:  0.5553789083200849 Recall:  0.6444444444444445 Precision:  0.054003724394785846 F1:  0.09965635738831614
+Confusion Matrix: SB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 887                 993
+True Positive                   4                   3
+Accuracy:  0.47164811870694223 Misclassification Rate:  0.5283518812930578 Recall:  0.42857142857142855 Precision:  0.0030120481927710845 F1:  0.005982053838484548
+Confusion Matrix: Brady
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 943                 917
+True Positive                  19                   8
+Accuracy:  0.5039745627980922 Misclassification Rate:  0.49602543720190784 Recall:  0.2962962962962963 Precision:  0.008648648648648649 F1:  0.01680672268907563
+Confusion Matrix: SNR
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 812                 989
+True Positive                  39                  47
+Accuracy:  0.4552199258081611 Misclassification Rate:  0.5447800741918389 Recall:  0.5465116279069767 Precision:  0.045366795366795366 F1:  0.08377896613190731
+Confusion Matrix: STach
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 895                 940
+True Positive                  17                  35
+Accuracy:  0.492845786963434 Misclassification Rate:  0.507154213036566 Recall:  0.6730769230769231 Precision:  0.035897435897435895 F1:  0.06815968841285296
+Confusion Matrix: PVC
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 810                1058
+True Positive                  13                   6
+Accuracy:  0.43243243243243246 Misclassification Rate:  0.5675675675675675 Recall:  0.3157894736842105 Precision:  0.005639097744360902 F1:  0.0110803324099723
+Confusion Matrix: SA
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 799                 978
+True Positive                  69                  41
+Accuracy:  0.4451510333863275 Misclassification Rate:  0.5548489666136724 Recall:  0.37272727272727274 Precision:  0.040235525024533855 F1:  0.07263064658990256
+Confusion Matrix: LAnFB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 960                 865
+True Positive                  33                  29
+Accuracy:  0.5241123476417594 Misclassification Rate:  0.4758876523582406 Recall:  0.46774193548387094 Precision:  0.03243847874720358 F1:  0.0606694560669456
+Confusion Matrix: RAD
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 760                1007
+True Positive                  21                  99
+Accuracy:  0.4552199258081611 Misclassification Rate:  0.5447800741918389 Recall:  0.825 Precision:  0.08951175406871609 F1:  0.16150081566068517
+Confusion Matrix: RBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 763                  88
+True Positive                 851                 185
+Accuracy:  0.5023847376788553 Misclassification Rate:  0.4976152623211447 Recall:  0.17857142857142858 Precision:  0.6776556776556777 F1:  0.2826585179526356
+Confusion Matrix: TInv
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 509                1254
+True Positive                  17                 107
+Accuracy:  0.3264440911499735 Misclassification Rate:  0.6735559088500265 Recall:  0.8629032258064516 Precision:  0.07861866274797942 F1:  0.1441077441077441
+Confusion Matrix: SVPB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 919                 957
+True Positive                   7                   4
+Accuracy:  0.48913619501854794 Misclassification Rate:  0.510863804981452 Recall:  0.36363636363636365 Precision:  0.004162330905306972 F1:  0.00823045267489712
+Confusion Matrix: NSIVCB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 603                1053
+True Positive                  73                 158
+Accuracy:  0.40328563857975624 Misclassification Rate:  0.5967143614202437 Recall:  0.683982683982684 Precision:  0.13047068538398018 F1:  0.2191400832177531
+Confusion Matrix: IRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 815                1001
+True Positive                  36                  35
+Accuracy:  0.45045045045045046 Misclassification Rate:  0.5495495495495495 Recall:  0.49295774647887325 Precision:  0.033783783783783786 F1:  0.06323396567299007
+Confusion Matrix: CRBBB
+columns        Predicted Negative  Predicted Positive
+rows                                                 
+True Negative                 745                1121
+True Positive                   6                  15
+Accuracy:  0.40275569687334395 Misclassification Rate:  0.5972443031266561 Recall:  0.7142857142857143 Precision:  0.013204225352112676 F1:  0.02592912705272256
+
+
+
+Total Accuracy:  0.4578303793990068 Total Misclassification Rate:  0.5421696206009932 Total Recall:  0.5029522615031945 Total Precision:  0.06425399865836193 Total F1 Score:  0.07964117912621527
