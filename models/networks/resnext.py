@@ -27,40 +27,58 @@ class BasicBlock(nn.Module):
     __constants__ = ['downsample']
 
     def __init__(self, inplanes, planes, stride=1, downsample=None, groups=1,
-                 base_width=64, dilation=1, norm_layer=None):
+                 base_width=64, dilation=1, norm_layer=None, all_depthwise=False):
         super(BasicBlock, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm1d
         
         # Both self.conv1 and self.downsample layers downsample the input when stride != 1
-        self.conv1 = conv3x3(inplanes, planes, stride)
-        self.bn1 = norm_layer(planes)
-        self.relu = nn.ReLU(inplace=True)
-        self.conv2 = conv3x3(planes, planes)
-        self.bn2 = norm_layer(planes)
-
-        # Create a downsampling layer
         width = int(planes * (base_width / 64.)) * groups
-        self.downsample = nn.Sequential(
-            conv3x3(inplanes, planes, stride, inplanes, dilation),
-            norm_layer(planes),
-            nn.ReLU(inplace=True)
-        )
+        if not all_depthwise:
+            self.conv1 = conv3x3(inplanes, planes, stride)
+            self.bn1 = norm_layer(planes)
+            self.relu = nn.ReLU(inplace=True)
+            self.conv2 = conv3x3(planes, planes)
+            self.bn2 = norm_layer(planes)
+
+            # Create a downsampling layer
+            """
+            self.downsample = nn.Sequential(
+                conv3x3(inplanes, planes, stride, inplanes, dilation),
+                norm_layer(planes),
+                nn.ReLU(inplace=True)
+            )
+            """
+        else:
+            self.conv1 = conv3x3(inplanes, planes, stride, inplanes)
+            self.bn1 = norm_layer(planes)
+            self.relu = nn.ReLU(inplace=True)
+            self.conv2 = conv3x3(planes, planes, groups=planes)
+            self.bn2 = norm_layer(planes)
+
+            # Create a downsampling layer
+            self.downsample = nn.Sequential(
+                conv3x3(inplanes, planes, stride, inplanes, dilation),
+                norm_layer(planes),
+                nn.ReLU(inplace=True)
+            )
         self.stride = stride
 
     def forward(self, x):
         identity = x
-
+        #print(x.shape)
         out = self.conv1(x)
         out = self.bn1(out)
         out = self.relu(out)
-
+        #print(out.shape)
         out = self.conv2(out)
         out = self.bn2(out)
+        #print(out.shape)
 
         if self.downsample is not None:
             identity = self.downsample(x)
 
+        #print(out.shape, identity.shape)
         out += identity
         out = self.relu(out)
 
@@ -149,9 +167,9 @@ class ResNet(nn.Module):
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         # Make it into Sequential layers
         self.fc = nn.Sequential(
-            nn.Linear(512, num_classes * 20, bias=False),
+            nn.Linear(512, num_classes * 10, bias=False),
             nn.Dropout(0.2),
-            nn.Linear(num_classes * 20, num_classes, bias=False)
+            nn.Linear(num_classes * 10, num_classes, bias=False)
         )
 
         for m in self.modules():
