@@ -203,7 +203,7 @@ if __name__ == "__main__":
                    num_classes=output_dim, 
                    groups=32, 
                    width_per_group=4,
-                   all_depthwise=True, 
+                   all_depthwise=False, 
                    )
     #"""
     model.to(cfg.DEVICE)

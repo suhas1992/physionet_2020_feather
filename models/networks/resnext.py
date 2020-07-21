@@ -42,13 +42,12 @@ class BasicBlock(nn.Module):
             self.bn2 = norm_layer(planes)
 
             # Create a downsampling layer
-            """
+            
             self.downsample = nn.Sequential(
                 conv3x3(inplanes, planes, stride, inplanes, dilation),
                 norm_layer(planes),
                 nn.ReLU(inplace=True)
             )
-            """
         else:
             self.conv1 = conv3x3(inplanes, planes, stride, inplanes)
             self.bn1 = norm_layer(planes)
