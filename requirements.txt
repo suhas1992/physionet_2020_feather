@@ -14,3 +14,4 @@ google-auth-oauthlib==0.4.1
 google-pasta==0.2.0
 googleapis-common-protos==1.52.0
 torchsummary==1.5.1
+psutil==5.7.2
