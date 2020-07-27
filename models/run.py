@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append("models")
+
 import math 
 import pickle 
 import psutil
@@ -8,14 +9,14 @@ import argparse
 import main as mn 
 import csv
 import config as cfg 
-import numpy as np
+import numpy as np 
 from scipy.io import loadmat
 from networks.rnn import RNN 
 from networks.mobile import mobileNet
+import utils.get_class_dict as cdict
 from networks.resnext import ResNet, Bottleneck, BasicBlock
 from torchsummary import summary 
 import data as dt
-#from data import get_loader
 
 import torch
 import torch.nn as nn
@@ -155,6 +156,8 @@ if __name__ == "__main__":
                         help="Complete input directory")
     parser.add_argument("-c","--check", required=False, default="False",
                         help="Check best model's performance")  
+    parser.add_argument("-g","--group", required=False, default="0",
+                        help="Group number(1-7")
     args = parser.parse_args()
 
     if not os.path.exists(args.datadir):
@@ -163,17 +166,36 @@ if __name__ == "__main__":
 
     
     cfg.DATA_PATH = args.datadir
+    dict_path = "/home/ubuntu/physionet/feature_dict"
 
     # Check if observation dictionary already exists, don't extract if yes
-    if os.path.exists(os.path.join(args.datadir, 'obs.p')):
-        print("Data exists, load features")
-        with open(os.path.join(args.datadir, 'obs.p'), 'rb') as fp:
-            feature_dict = pickle.load(fp)
+    if int(args.group) == 0:
+        if os.path.exists(os.path.join(dict_path, 'obs.p')):
+            print("Data exists, load features")
+            with open(os.path.join(dict_path, 'obs.p'), 'rb') as fp:
+                feature_dict = pickle.load(fp)
+        else:
+            files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+            feature_dict, invalid_count = extract_challenge_data(files)
+            print("Data extracted")
+            save_pickle(dict_path, feature_dict, 'obs')
+
+        output_dim = len(cfg.TARGETS)-1
+        num_classes = get_classes(args.datadir)
     else:
-        files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
-        feature_dict, invalid_count = extract_challenge_data(files)
-        print("Data extracted")
-        save_pickle(args.datadir, feature_dict, 'obs')
+    # Extract features for individual groups
+        if os.path.exists(os.path.join(dict_path, 'obs_{}.p'.format(args.group))):
+            print("Data exists, load features")
+            with open(os.path.join(dict_path, 'obs_{}.p'.format(args.group)), 'rb') as fp:
+                feature_dict = pickle.load(fp)
+        else:
+            files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+            feature_dict = cdict.extract_challenge_data(files, int(args.group), cfg.TARGETS)
+            print("Data extracted")
+            save_pickle(dict_path, feature_dict, 'obs_{}'.format(args.group))
+
+        output_dim = len(cdict.CLASS_DICT[int(args.group)])
+        num_classes = cdict.CLASS_DICT[int(args.group)]
 
     # Define model parameters
     train_loader = dt.get_loader("train", feature_dict=feature_dict)
@@ -193,8 +215,6 @@ if __name__ == "__main__":
     [ 6, 160, 3, 1],
     [ 6, 320, 1, 1]]
 
-    output_dim = len(cfg.TARGETS)-1
-
     #model = MLP(input_dim, hidden_list, output_dim)
     #model = RNN(input_dim, input_dim, output_dim)
     #model = mobileNet(input_dim, mobile_model_params, output_dim)
@@ -209,7 +229,7 @@ if __name__ == "__main__":
     model.to(cfg.DEVICE)
 
     # Define training parameters
-    path = "/share/workhorse3/vsanil/physionet/best_models/"
+    path = "/home/ubuntu/physionet/best_models"
     criterion = nn.BCELoss()
     criterion.to(cfg.DEVICE)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
@@ -218,8 +238,8 @@ if __name__ == "__main__":
 
     if args.check == "True":
         print("Checking best model's perfomance")
-        best_model_path = "/home/vsanil/workhorse3/physionet/best_models/best_model.pth"
-
+        #best_model_path = "/home/vsanil/workhorse3/physionet/best_models/best_model.pth"
+        best_model_path = "/home/ubuntu/physionet/best_models/best_model.pth"
         # Load the model
         checkpoint = torch.load(best_model_path)
         model.load_state_dict(checkpoint['model_state_dict'])
@@ -231,7 +251,6 @@ if __name__ == "__main__":
 
     # Print model summary
     summary(model, (12, 10000))
-    num_classes = get_classes(args.datadir)
 
     with open("checkfile.log", "w") as f:
         print("::::::::: Logs ::::::::::", file=f)
