@@ -23,7 +23,7 @@ class ECGTrainSet(Dataset):
     def __getitem__(self, index):
         f = torch.transpose(torch.from_numpy(self.features[index]).float(), 0, 1)
 
-        l = torch.LongTensor(self.label[index]).unsqueeze(0)
+        l = torch.FloatTensor(self.label[index]).unsqueeze(0)
 
         return f, l
 
@@ -96,8 +96,9 @@ def get_loader(loader_type, val_exists=True, feature_dict=None):
                                         test_size=cfg.VAL_SPLIT+cfg.TEST_SPLIT,
                                         shuffle=True, random_state=cfg.RANDOM_SEED)
             temp_set = Subset(dataset, temp_idx)
+            #print("Here", len(temp_set))
             val_idx, test_idx = train_test_split(list(range(len(temp_set))), dataset=temp_set,
-                                                test_size= 1-(cfg.TEST_SPLIT/(cfg.VAL_SPLIT + cfg.TEST_SPLIT)),
+                                                test_size= cfg.TEST_SPLIT/(cfg.VAL_SPLIT + cfg.TEST_SPLIT),
                                                 shuffle=True, random_state=cfg.RANDOM_SEED)
             if loader_type == "val":
                 loader_set = Subset(temp_set, val_idx)
