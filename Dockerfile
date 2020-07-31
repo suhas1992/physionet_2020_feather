@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.2-base-ubuntu18.04
+FROM nvcr.io/nvidia/pytorch:19.03-py3
 
 ## The MAINTAINER instruction sets the Author field of the generated images
 MAINTAINER author@sample.com
