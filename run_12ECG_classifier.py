@@ -9,6 +9,7 @@ import torch
 from download import download_file_from_google_drive
 from models.networks.resnext import ResNet, BasicBlock
 from get_12ECG_features import get_12ECG_features
+import ast
 
 # Language defined keyword
 keyword = 'pytorch'
@@ -59,9 +60,8 @@ def classify_pytorch(data, model):
 # Dictionary maintaing relevant framework related funcs
 lang_dict = {'pytorch':{'model':load_pytorch, 'classify':classify_pytorch}}
 
-def run_12ECG_classifier(data,header_data,classes,model):
+def run_12ECG_classifier(data,header_data,model,num_classes = 27):
 
-    num_classes = len(classes)
     label = np.zeros(num_classes, dtype=int)
     score = np.zeros(num_classes)
 
@@ -74,7 +74,14 @@ def run_12ECG_classifier(data,header_data,classes,model):
     label = np.where(preds > 0.5, 1, 0)
     score = preds
 
-    return label, score
+    label = np.array(label, dtype=np.int)
+    score = np.array(score, dtype=np.float64)
+
+    ## Get classes
+    with open('classes.txt','r') as f:
+        classes = ast.literal_eval(f.read())
+    
+    return label, score, classes
 
 def load_12ECG_model(input_directory):
     # load the model from disk 

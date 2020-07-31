@@ -6,6 +6,9 @@ from get_12ECG_features import get_12ECG_features
 def train_12ECG_classifier(input_directory, output_directory):
     # Get classes and train model
     classes = get_classes(input_directory, train_27=True)
+    with open('classes.txt','w') as f:
+        f.write(str(classes))
+        
     train(input_directory, output_directory, classes)
 
     config_vals = ["True", "True", 27]
