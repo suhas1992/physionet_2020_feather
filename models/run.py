@@ -21,10 +21,10 @@ import data as dt
 import torch
 import torch.nn as nn
 
-def save(model,optimizer,path):
+def save(model,optimizer,path,group):
     torch.save({'model_state_dict':model.state_dict(),
                 'optimizer_state_dict':optimizer.state_dict()
-               },os.path.join(path,"best_model.pth"))
+               },os.path.join(path,"best_model_{}.pth".format(group)))
 
 # Save data in pickle format
 def save_pickle(path, data_dict, filename):
@@ -154,10 +154,12 @@ if __name__ == "__main__":
 
     parser.add_argument("-i", "--datadir", required=True,
                         help="Complete input directory")
-    parser.add_argument("-c","--check", required=False, default="False",
+    parser.add_argument("-c","--check", required=False, default="false",
                         help="Check best model's performance")  
     parser.add_argument("-g","--group", required=False, default="0",
-                        help="Group number(1-7")
+                        help="Group number(1-7)")
+    parser.add_argument("-m","--model",required=False,default="hybrid",
+                        help="Select the type of model to train")
     args = parser.parse_args()
 
     if not os.path.exists(args.datadir):
@@ -223,7 +225,7 @@ if __name__ == "__main__":
                    num_classes=output_dim, 
                    groups=32, 
                    width_per_group=4,
-                   all_depthwise=False, 
+                   all_depthwise=True, 
                    )
     #"""
     model.to(cfg.DEVICE)
@@ -273,7 +275,7 @@ if __name__ == "__main__":
             f1 = 0.0
         
         if f1 > best_f1:
-            save(model, optimizer, path)
+            save(model, optimizer, path, args.group)
             best_f1 = f1
 
         # Step through the scheduler

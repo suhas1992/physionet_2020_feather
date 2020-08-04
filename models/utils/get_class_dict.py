@@ -1,5 +1,5 @@
-import csv 
-import os 
+import os
+import csv  
 import psutil
 import numpy as np
 from scipy.io import loadmat
@@ -11,6 +11,39 @@ CLASS_DICT = {1:["270492004", "164889003", "164890007", "426627000", "10370003",
               5:["164947007","111975006","164917005","164934002","59931005"],
               6:["39732003","47665007"],
               7:["698252002"]}
+
+def get_class_group(diagnoses):
+    """
+        Return the SNOMED code and the group number of the input 
+        diagnoses
+    """
+    found = False
+    snomed_code = ""
+    group_num = "200"
+    group_elems = []
+
+    with open("dx_mapping_scored.csv") as c:
+        reads = csv.reader(c, delimiter=",")
+        for row in reads:
+            if reads[2] == diagnoses:
+                found = True
+                snomed_code = reads[1]
+                break
+
+    if not found:
+        print("Incorrect diagnoses entered!")
+        exit() 
+
+    for key, value in CLASS_DICT.items():
+        if snomed_code in value:
+            group_num = str(key)
+            with open("dx_mapping_scored.csv") as c:
+                reads = csv.reader(c, delimiter=",")
+                for row in reads:
+                    if reads[1] in value:
+                        group_elems.append(reads[2])
+
+    return group_num, group_elems
 
 def load_challenge_data(filename):
 
@@ -42,13 +75,12 @@ def extract_challenge_data(files, group, feature_dict):
             data, header = load_challenge_data(f)
             label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
             l = labels.copy()
-            add = True 
+            add = False 
             for lbl in label:
                 try:
                     l[keys[lbl]] = 1
+                    add = True
                 except KeyError:
-                    add=False
-                    break
                     continue
             if add:
                 feature_dict['features'].append(data)
