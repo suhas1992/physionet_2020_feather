@@ -73,7 +73,7 @@ if __name__=="__main__":
                         help="Number of examples")
     parser.add_argument("-g","--group", required=False, default="0",
                         help="Group number(1-7)")
-    parser.add_argument("d", "--diagnosis", required=True,
+    parser.add_argument("-d", "--diagnosis", required=True,
                         help="Refer to Dx mapping csv to get a list of diagnosis")
     args = parser.parse_args() 
 
@@ -81,6 +81,13 @@ if __name__=="__main__":
         print("Path does not exist")
         exit()
 
-    snomed, group_ls = cfg.get_class_group(args.diagnosis)
+    snomed, group_num, group_ls = cdict.get_class_group(args.diagnosis)
 
+    model_path = os.path.join('/'.join(args.datadir.split('/')[:-2]),
+                              'best_models',
+                              'best_model_{}.pth'.format(group_num))
 
+    if not os.path.exists(model_path):
+        # Train the model again
+    else:
+        

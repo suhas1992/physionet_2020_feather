@@ -25,9 +25,9 @@ def get_class_group(diagnoses):
     with open("dx_mapping_scored.csv") as c:
         reads = csv.reader(c, delimiter=",")
         for row in reads:
-            if reads[2] == diagnoses:
+            if row[2] == diagnoses:
                 found = True
-                snomed_code = reads[1]
+                snomed_code = row[1]
                 break
 
     if not found:
@@ -40,10 +40,10 @@ def get_class_group(diagnoses):
             with open("dx_mapping_scored.csv") as c:
                 reads = csv.reader(c, delimiter=",")
                 for row in reads:
-                    if reads[1] in value:
-                        group_elems.append(reads[2])
+                    if row[1] in value:
+                        group_elems.append(row[2])
 
-    return group_num, group_elems
+    return snomed_code, group_num, group_elems
 
 def load_challenge_data(filename):
 
