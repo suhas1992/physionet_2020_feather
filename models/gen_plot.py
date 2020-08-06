@@ -6,11 +6,13 @@ import csv
 import math 
 import pickle 
 import argparse 
+import shutil
 import main as mn 
 import data as dt
 import config as cfg 
 import numpy as np 
 from scipy.io import loadmat
+import matplotlib.pyplot as plt 
 import utils.get_class_dict as cdict
 
 import torch
@@ -18,6 +20,14 @@ import torch.nn as nn
 from torchsummary import summary 
 from networks.mobile import mobileNet
 from networks.resnext import ResNet, Bottleneck, BasicBlock
+
+def load_model(model, path):
+    """
+        Return the loaded model
+    """
+    checkpoint = torch.load(path)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    return model
 
 def load_challenge_data(filename):
 
@@ -32,37 +42,38 @@ def load_challenge_data(filename):
 
     return data, header_data
 
-# Extract challenge data for a particular group
-def extract_challenge_data(count, group_name):
-    invalid_count = 0
-    count = 0
+# Find unique classes.
+def get_classes(input_directory, train_27=False):
+    classes = set()
+    check_27_class = set()
+    with open("dx_mapping_scored.csv") as c:
+        reads = csv.reader(c, delimiter=',')
+        for row in reads:
+            check_27_class.add(row[1])
 
-    feature_dict = {'features':[], 'labels':[]}
-    labels = [0 for _ in CLASS_DICT[group]]
-    keys = {k:idx for idx, k in enumerate(CLASS_DICT[group])}
+    for f in os.listdir(input_directory):
+        filename = os.path.join(input_directory, f)
+        if filename.endswith('.hea'):
+            with open(filename, 'r') as f:
+                for l in f:
+                    if l.startswith('#Dx'):
+                        tmp = l.split(': ')[1].split(',')
+                        for c in tmp:
+                            if c in check_27_class:
+                                classes.add(c.strip())
 
-    for idx, f in enumerate(files):
-        if f.endswith('.mat'):
-            #print(count, f, idx)
-            if count % 1000 == 0:
-                print("RAM used: ", psutil.virtual_memory().percent, "Files done: ", count)
-            data, header = load_challenge_data(f)
-            label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
-            l = labels.copy()
-            add = False 
-            for lbl in label:
-                try:
-                    l[keys[lbl]] = 1
-                    add = True
-                except KeyError:
-                    continue
-            if add:
-                feature_dict['features'].append(data)
-                feature_dict['labels'].append(l) 
-            count += 1
+    return sorted(classes)
 
-    print("Features for group {} extracted".format(group))
-    return feature_dict
+def save_plots(idx, sig, path):
+    fig, ax = plt.subplot(nrows=len(sig)//2, ncols=2)
+
+    for i in range(len(sig)):
+        for row in ax:
+            for col in row:
+                col.plot(sig[i])
+                ax[row, col].set_title("Lead {}".format(i))
+
+    plt.savefig("{}.png".format(idx))
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser() 
@@ -82,12 +93,66 @@ if __name__=="__main__":
         exit()
 
     snomed, group_num, group_ls = cdict.get_class_group(args.diagnosis)
+    group_num = int(group_num)
 
     model_path = os.path.join('/'.join(args.datadir.split('/')[:-2]),
                               'best_models',
                               'best_model_{}.pth'.format(group_num))
 
+    if group_num == 0:
+        output_dim = len(cfg.TARGETS)-1
+        num_classes = get_classes(args.datadir)
+    else:
+        output_dim = len(cdict.CLASS_DICT[group_num])
+        num_classes = cdict.CLASS_DICT[group_num]
+
+    # Model params
+    print(output_dim)
+    model = ResNet(BasicBlock, [2,2,2,2], 
+                   num_classes=output_dim, 
+                   groups=32, 
+                   width_per_group=4,
+                   all_depthwise=True, 
+                   )
+    model.to(cfg.DEVICE)
+
     if not os.path.exists(model_path):
         # Train the model again
+        cmd = "python models/run.py -i {0} -g {1}".format(args.datadir, group_num)
     else:
-        
+        model = load_model(model, model_path)
+
+    plot_path = "plots/"
+    window_len = 500
+    count = 10
+    
+    files = [os.path.join(args.datadir, f) for f in os.listdir(args.datadir)]
+    diag_sigs = []
+
+    # Check for files and seach for file with snomed code
+    for f in files:
+        if count == 0:
+            break
+
+        if f.endswith('.mat'):
+            data, header = load_challenge_data(f)
+            label = header[-4].replace("#Dx: ","").replace("\n","").split(',')
+            if snomed in label:
+                diag_sigs.append(data)
+                count -= 1
+
+    # Window the signal and check the window for dominant diagnosis
+    for idx, sigs in enumerate(diag_sigs):
+        sigpath = os.path.join(plot_path, str(idx))
+        if os.path.exists(sigpath):
+            # Clean the directory
+            shutil.rmtree(sigpath)
+            os.mkdir(sigpath)
+        else:
+            os.mkdir(sigpath)
+        for i in range(0, sigs.shape[1], window_len):
+            inp = torch.from_numpy(sigs[:,i:i+window_len]).float().unsqueeze(0).to(cfg.DEVICE)
+            preds = model(inp)[0].cpu().detach().numpy()
+            print(preds)
+
+        break
