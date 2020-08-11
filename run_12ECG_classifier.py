@@ -60,7 +60,7 @@ def classify_pytorch(data, model):
 lang_dict = {'pytorch':{'model':load_pytorch, 'classify':classify_pytorch}}
 
 def run_12ECG_classifier(data,header_data,classes,model):
-
+    
     num_classes = len(classes)
     label = np.zeros(num_classes, dtype=int)
     score = np.zeros(num_classes)

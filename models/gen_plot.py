@@ -64,16 +64,21 @@ def get_classes(input_directory, train_27=False):
 
     return sorted(classes)
 
-def save_plots(idx, sig, path):
-    fig, ax = plt.subplot(nrows=len(sig)//2, ncols=2)
+def save_plots(index, sig, path, preds, group_num):
+    
+    pred_dict = {group_num[i]:preds[i] for i in range(len(group_num))}
 
-    for i in range(len(sig)):
-        for row in ax:
-            for col in row:
-                col.plot(sig[i])
-                ax[row, col].set_title("Lead {}".format(i))
+    fig, ax = plt.subplots(nrows=len(sig), ncols=1, figsize=(20,40))
+    fig.suptitle("Preds: {}".format(pred_dict))
+    count = 0
 
-    plt.savefig("{}.png".format(idx))
+    for idx, row in enumerate(ax):
+        row.plot(sig[count])
+        ax[idx].set_title("Lead {}".format(count))
+        count += 1
+
+    fig.savefig(os.path.join(path,"{}.png".format(index)))
+    plt.close(fig)
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser() 
@@ -82,8 +87,8 @@ if __name__=="__main__":
                         help="Input directory")
     parser.add_argument("-e", "--examples", required=False, default="10",
                         help="Number of examples")
-    parser.add_argument("-g","--group", required=False, default="0",
-                        help="Group number(1-7)")
+    parser.add_argument("-g","--group", required=False, default="None",
+                        help="Group number(0-7)")
     parser.add_argument("-d", "--diagnosis", required=True,
                         help="Refer to Dx mapping csv to get a list of diagnosis")
     args = parser.parse_args() 
@@ -93,7 +98,11 @@ if __name__=="__main__":
         exit()
 
     snomed, group_num, group_ls = cdict.get_class_group(args.diagnosis)
-    group_num = int(group_num)
+    
+    if args.group != "None":
+        group_num = int(args.group)
+    else:
+        group_num = int(group_num)
 
     model_path = os.path.join('/'.join(args.datadir.split('/')[:-2]),
                               'best_models',
@@ -123,7 +132,7 @@ if __name__=="__main__":
         model = load_model(model, model_path)
 
     plot_path = "plots/"
-    window_len = 500
+    window_len = 2000
     count = 10
     
     files = [os.path.join(args.datadir, f) for f in os.listdir(args.datadir)]
@@ -144,6 +153,7 @@ if __name__=="__main__":
     # Window the signal and check the window for dominant diagnosis
     for idx, sigs in enumerate(diag_sigs):
         sigpath = os.path.join(plot_path, str(idx))
+        count = 0
         if os.path.exists(sigpath):
             # Clean the directory
             shutil.rmtree(sigpath)
@@ -151,8 +161,8 @@ if __name__=="__main__":
         else:
             os.mkdir(sigpath)
         for i in range(0, sigs.shape[1], window_len):
-            inp = torch.from_numpy(sigs[:,i:i+window_len]).float().unsqueeze(0).to(cfg.DEVICE)
+            count += 1
+            sig = sigs[:,i:i+window_len]
+            inp = torch.from_numpy(sig).float().unsqueeze(0).to(cfg.DEVICE)
             preds = model(inp)[0].cpu().detach().numpy()
-            print(preds)
-
-        break
+            save_plots(count, sig, sigpath, preds, group_ls)
