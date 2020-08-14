@@ -3,3 +3,4 @@ outputs/
 *.log
 *.pyc
 plots/
+diagnosis_logs/

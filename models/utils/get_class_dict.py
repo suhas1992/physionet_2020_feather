@@ -17,6 +17,9 @@ CLASS_DICT = {1:["270492004", "164889003", "164890007", "426627000", "10370003",
 RESAMP = 0.25
 
 def extract_individual_group_data(files, snomed_code, diagnosis, group_num):
+    """
+        Return a feature set for an individual diagnosis 
+    """
     # Extract all positive data samples
     feature_dict = {'features':[], 'labels':[]}
     p_count = 0
@@ -98,6 +101,8 @@ def get_class_group(diagnoses):
                 for row in reads:
                     if row[1] in value:
                         group_elems.append(row[2])
+            
+            break
 
     return snomed_code, group_num, group_elems
 
