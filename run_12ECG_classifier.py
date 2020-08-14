@@ -65,10 +65,7 @@ def run_12ECG_classifier(data,header_data,model,num_classes = 27):
     label = np.zeros(num_classes, dtype=int)
     score = np.zeros(num_classes)
 
-    # Use your classifier here to obtain a label and score for each class. 
-    features=np.asarray(get_12ECG_features(data,header_data))
-    feats_reshape = features.reshape(1,-1)
-
+    # Use your classifier here to obtain a label and score for each class.
     preds = lang_dict[keyword]['classify'](data, model)
 
     label = np.where(preds > 0.5, 1, 0)
