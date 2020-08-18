@@ -70,9 +70,6 @@ def run_12ECG_classifier(data,header_data,model,num_classes = 27):
 
     label = np.where(preds > 0.5, 1, 0)
     score = preds
-
-    label = np.array(label, dtype=np.int)
-    score = np.array(score, dtype=np.float64)
     
     return label, score
 
