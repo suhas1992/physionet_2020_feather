@@ -73,12 +73,8 @@ def run_12ECG_classifier(data,header_data,model,num_classes = 27):
 
     label = np.array(label, dtype=np.int)
     score = np.array(score, dtype=np.float64)
-
-    ## Get classes
-    with open('classes.txt','r') as f:
-        classes = ast.literal_eval(f.read())
     
-    return label, score, classes
+    return label, score
 
 def load_12ECG_model(input_directory):
     # load the model from disk 
