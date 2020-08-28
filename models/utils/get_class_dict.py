@@ -23,6 +23,7 @@ def extract_individual_group_data(files, snomed_code, diagnosis, group_num):
     # Extract all positive data samples
     feature_dict = {'features':[], 'labels':[]}
     p_count = 0
+    count = 0
     for idx, f in enumerate(files):
         if f.endswith('.mat'):
             #print(count, f, idx)
@@ -39,10 +40,13 @@ def extract_individual_group_data(files, snomed_code, diagnosis, group_num):
             if add:
                 feature_dict['features'].append(data)
                 feature_dict['labels'].append(l) 
+            count += 1
 
     # Extract all negative data samples
     in_group, out_group = p_count-int(p_count*RESAMP), int(p_count*RESAMP)
+    print(p_count, in_group, out_group)
     random.shuffle(files)
+    count = 0
     for idx, f in enumerate(files):
         if in_group == 0 and out_group == 0:
             break
@@ -59,15 +63,18 @@ def extract_individual_group_data(files, snomed_code, diagnosis, group_num):
                             in_group -= 1
                             l = [0,1]
                             add = True
+                            break
                     else:
                         if out_group != 0:
                             out_group -= 1
                             l = [0,1]
                             add = True
+                            break
             if add:
                 feature_dict['features'].append(data)
                 feature_dict['labels'].append(l) 
-
+            count += 1
+    
     print("Features for diagnosis {} extracted".format(diagnosis))
     return feature_dict
 

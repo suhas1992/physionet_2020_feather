@@ -262,7 +262,7 @@ if __name__ == "__main__":
         # Train the model
         model.train()
         model, optimizer = mn.train(model, train_loader, optimizer, criterion, i)
-
+        
         # Evaluate the model
         model.eval()
         with open("checkfile.log", "a") as f:

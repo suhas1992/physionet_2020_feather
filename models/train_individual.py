@@ -82,12 +82,13 @@ if __name__=="__main__":
                               'best_model_{}.pth'.format(args.diagnosis))
 
     # Load the data
-    files = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)]
+    files = [os.path.join(cfg.DATA_DICT_PATH, f) for f in os.listdir(cfg.DATA_DICT_PATH)]
     feature_dict = cdict.extract_individual_group_data(files, snomed, args.diagnosis, group_num)
 
     # Define model parameters
     train_loader = dt.get_loader("train", feature_dict=feature_dict)
     val_loader = dt.get_loader("val", feature_dict=feature_dict)
+    num_classes = get_classes(args.datadir)
 
     # Binary classification
     output_dim = 2
@@ -109,7 +110,7 @@ if __name__=="__main__":
     best_f1 = 0.0
 
     # Print model summary
-    summary(model, (output_dim, 10000))
+    summary(model, (12, 10000))
 
     # Initialize log file
     with open(os.path.join(log_path, "{}.log".format(args.diagnosis)), "w") as f:
@@ -124,7 +125,7 @@ if __name__=="__main__":
         # Evaluate the model
         model.eval()
         with open(os.path.join(log_path, "{}.log".format(args.diagnosis)), "a") as f:
-            accuracy, loss, recall, precision = mn.eval(model, val_loader, criterion, i, f, classes=num_classes)
+            accuracy, loss, recall, precision = mn.ind_eval(model, val_loader, criterion, i, args.diagnosis, f)
 
         # Compute f1 and check if it is nan
         f1 = 2*((precision * recall) / (precision + recall))

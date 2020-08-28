@@ -117,3 +117,59 @@ def eval(Model, Evalloader, Criterion, Epoch, filehandler=None, classes=None):
               "Precision: ", precision)
     
     return accuracy, tot_loss/(batch_num+1), recall, precision
+
+def ind_eval(Model, Evalloader, Criterion, Epoch, diagnosis, filehandler=None):
+    accuracy = 0
+    tot_loss = 0
+    true_labels = []
+    preds = []
+    for batch_num, (features, labels, lengths) in enumerate(Evalloader):
+        # Send data to device
+        features, labels = features.to(cfg.DEVICE), labels.to(cfg.DEVICE)
+
+        pred = Model(features)
+        
+        # Compute loss 
+        loss = Criterion(pred, labels)
+
+        pred = torch.where(pred[0,:].cpu() > 0.5, torch.tensor([1.0]),torch.tensor([0.0]))
+        labels = labels[0,:]
+
+        pred = pred.detach().numpy()
+        labels = labels.cpu().detach().numpy()
+
+        preds.append(pred.tolist())
+        true_labels.append(labels.tolist())
+
+        tot_loss += float(loss.item())
+        
+        if batch_num % 50 == 1:
+            curr_loss = float(loss.item())
+            print("Epoch: ", Epoch, "Validation Loss: ", curr_loss)
+
+        # Clear redundant variables
+        torch.cuda.empty_cache()
+        del features
+        del labels
+        del loss
+
+    # Compute final metrics
+    true_labels = np.vstack(true_labels)
+    preds = np.vstack(preds)
+
+    accuracy, precision, recall, misclass_rate, f1 = em.print_binary_report(true_labels, preds, filehandler, diagnosis)
+    
+    if filehandler:
+        print("\n\n\nTotal Accuracy: ", accuracy, 
+            "Total Misclassification Rate: ", misclass_rate,
+            "Total Recall: ", recall, 
+            "Total Precision: ", precision,
+            "Total F1 Score: ", f1,
+            file=filehandler)
+    else:
+        print("Accuracy: ", accuracy, 
+              "Misclassification Rate: ", misclass_rate,
+              "Recall: ", recall, 
+              "Precision: ", precision)
+    
+    return accuracy, tot_loss/(batch_num+1), recall, precision

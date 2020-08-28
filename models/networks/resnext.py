@@ -132,11 +132,12 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1000, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
-                 norm_layer=None, all_depthwise=False):
+                 norm_layer=None, all_depthwise=False, get_features=False):
         super(ResNet, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm1d
         self._norm_layer = norm_layer
+        self.get_features = get_features
 
         self.inplanes = 64
         self.dilation = 1
@@ -224,8 +225,14 @@ class ResNet(nn.Module):
         x = self.layer3(x)
         x = self.layer4(x)
 
+        fin_conv = x
         # Perform global averaging
         x = x.mean([2])
+        fin_ga = x 
         x = self.sigmoid(self.fc(x))
 
-        return x
+        if not self.get_features:
+            return x
+        else:
+            # Return convolutional features, mean pool features and linear features
+            return fin_conv, fin_ga, x
